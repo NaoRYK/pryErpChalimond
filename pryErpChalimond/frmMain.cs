@@ -25,6 +25,13 @@ namespace pryErpChalimond
             lblStatusRol.Text = $"Rol: {loggedRol}";
             lblStatusHora.Text = $"Conexión: {connectionTime}";
 
+            // Restringir acceso a Auditoría y Gestión de Usuarios si el rol no es Admin
+            if (!loggedRol.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                btnAuditoria.Visible = false;
+                btnUsuarios.Visible = false;
+            }
+
             // Cargar dashboard por defecto
             AbrirFormularioHijo(new frmDashboard());
             DestacarBotonActivo(btnInicio);
@@ -62,6 +69,9 @@ namespace pryErpChalimond
             btnAuditoria.BackColor = Color.FromArgb(15, 23, 42);
             btnAuditoria.ForeColor = Color.FromArgb(148, 163, 184);
 
+            btnUsuarios.BackColor = Color.FromArgb(15, 23, 42);
+            btnUsuarios.ForeColor = Color.FromArgb(148, 163, 184);
+
             // Destacar botón activo
             btn.BackColor = Color.FromArgb(30, 41, 59);
             btn.ForeColor = Color.FromArgb(129, 140, 248);
@@ -81,8 +91,24 @@ namespace pryErpChalimond
 
         private void btnAuditoria_Click(object sender, EventArgs e)
         {
+            if (!loggedRol.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Acceso denegado: Esta pantalla solo está disponible para administradores.", "Acceso Restringido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             DestacarBotonActivo(btnAuditoria);
             AbrirFormularioHijo(new frmAuditoria());
+        }
+
+        private void btnUsuarios_Click(object sender, EventArgs e)
+        {
+            if (!loggedRol.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Acceso denegado: Esta pantalla solo está disponible para administradores.", "Acceso Restringido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            DestacarBotonActivo(btnUsuarios);
+            AbrirFormularioHijo(new frmUsuarios());
         }
 
         private void btnSalirMain_Click(object sender, EventArgs e)
@@ -90,8 +116,27 @@ namespace pryErpChalimond
             DialogResult result = MessageBox.Show("¿Está seguro de que desea cerrar la sesión actual?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                // Registrar auditoría de logout
+                clsAuditoria.Registrar(clsSesion.Usuario, "Seguridad", "Logout", "Cierre de sesión manual.");
+
+                // Limpiar sesión
+                clsSesion.Usuario = "desconocido";
+                clsSesion.Rol = "";
+
                 this.DialogResult = DialogResult.Yes;
                 this.Close();
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            // Registrar auditoría si la sesión seguía activa al cerrar la ventana directamente
+            if (clsSesion.Usuario != "desconocido" && this.DialogResult != DialogResult.Yes)
+            {
+                clsAuditoria.Registrar(clsSesion.Usuario, "Seguridad", "Logout", "Cierre directo de la ventana de la aplicación.");
+                clsSesion.Usuario = "desconocido";
+                clsSesion.Rol = "";
             }
         }
     }

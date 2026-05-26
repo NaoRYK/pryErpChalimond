@@ -254,9 +254,37 @@ namespace pryErpChalimond
                         NombreUsuario VARCHAR(50) NOT NULL,
                         FechaHora DATETIME NOT NULL,
                         Exitoso YESNO NOT NULL,
-                        Detalle VARCHAR(255) NOT NULL
+                        Detalle VARCHAR(255) NOT NULL,
+                        Modulo VARCHAR(50),
+                        Accion VARCHAR(50)
                     )";
                     EjecutarComando(conn, sql);
+                }
+                else
+                {
+                    // Asegurarse de que existan las columnas Modulo y Accion para escalabilidad
+                    if (!ExisteColumna(conn, "AuditoriaSesion", "Modulo"))
+                    {
+                        try
+                        {
+                            EjecutarComando(conn, "ALTER TABLE AuditoriaSesion ADD COLUMN Modulo VARCHAR(50)");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error al agregar columna Modulo: " + ex.Message);
+                        }
+                    }
+                    if (!ExisteColumna(conn, "AuditoriaSesion", "Accion"))
+                    {
+                        try
+                        {
+                            EjecutarComando(conn, "ALTER TABLE AuditoriaSesion ADD COLUMN Accion VARCHAR(50)");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error al agregar columna Accion: " + ex.Message);
+                        }
+                    }
                 }
 
                 // 3. Semillar datos de configuración base.

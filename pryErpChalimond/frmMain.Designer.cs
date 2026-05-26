@@ -20,6 +20,7 @@ namespace pryErpChalimond
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.btnSalirMain = new System.Windows.Forms.Button();
             this.btnAuditoria = new System.Windows.Forms.Button();
+            this.btnUsuarios = new System.Windows.Forms.Button();
             this.btnPersonal = new System.Windows.Forms.Button();
             this.btnInicio = new System.Windows.Forms.Button();
             this.pnlBrand = new System.Windows.Forms.Panel();
@@ -40,6 +41,7 @@ namespace pryErpChalimond
             this.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.pnlSidebar.Controls.Add(this.btnSalirMain);
             this.pnlSidebar.Controls.Add(this.btnAuditoria);
+            this.pnlSidebar.Controls.Add(this.btnUsuarios);
             this.pnlSidebar.Controls.Add(this.btnPersonal);
             this.pnlSidebar.Controls.Add(this.btnInicio);
             this.pnlSidebar.Controls.Add(this.pnlBrand);
@@ -86,6 +88,26 @@ namespace pryErpChalimond
             this.btnAuditoria.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAuditoria.UseVisualStyleBackColor = true;
             this.btnAuditoria.Click += new System.EventHandler(this.btnAuditoria_Click);
+            // 
+            // btnUsuarios
+            // 
+            this.btnUsuarios.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnUsuarios.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUsuarios.FlatAppearance.BorderSize = 0;
+            this.btnUsuarios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUsuarios.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnUsuarios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.btnUsuarios.Location = new System.Drawing.Point(0, 180);
+            this.btnUsuarios.Name = "btnUsuarios";
+            this.btnUsuarios.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnUsuarios.Size = new System.Drawing.Size(220, 50);
+            this.btnUsuarios.TabIndex = 3;
+            this.btnUsuarios.Text = "Gestión de Usuarios";
+            this.btnUsuarios.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUsuarios.UseVisualStyleBackColor = true;
+            this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
             // 
             // btnPersonal
             // 
@@ -246,6 +268,7 @@ namespace pryErpChalimond
         private System.Windows.Forms.Button btnInicio;
         private System.Windows.Forms.Button btnPersonal;
         private System.Windows.Forms.Button btnAuditoria;
+        private System.Windows.Forms.Button btnUsuarios;
         private System.Windows.Forms.Button btnSalirMain;
         private System.Windows.Forms.Panel pnlStatus;
         private System.Windows.Forms.Label lblStatusUsuario;

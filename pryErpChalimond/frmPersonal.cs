@@ -257,6 +257,7 @@ namespace pryErpChalimond
                     };
 
                     clsConexion.EjecutarConsulta(sqlInsert, parameters);
+                    clsAuditoria.Registrar(clsSesion.Usuario, "Personal", "Crear", $"Se registró al personal '{apellido}, {nombre}' con DNI: {dni}.");
                     MessageBox.Show("Personal registrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -295,6 +296,7 @@ namespace pryErpChalimond
                     };
 
                     clsConexion.EjecutarConsulta(sqlUpdate, parameters);
+                    clsAuditoria.Registrar(clsSesion.Usuario, "Personal", "Modificar", $"Se modificaron los datos del personal '{apellido}, {nombre}' con DNI: {dni} (ID: {selectedIdPersonal}).");
                     MessageBox.Show("Personal actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -330,10 +332,11 @@ namespace pryErpChalimond
                         new OleDbParameter("?", selectedIdPersonal)
                     });
 
-                    // 3. Eliminar personal
                     clsConexion.EjecutarConsulta("DELETE FROM Personal WHERE IdPersonal = ?", new OleDbParameter[] {
                         new OleDbParameter("?", selectedIdPersonal)
                     });
+
+                    clsAuditoria.Registrar(clsSesion.Usuario, "Personal", "Eliminar", $"Se eliminó al personal con ID: {selectedIdPersonal} y todos sus contactos asociados.");
 
                     MessageBox.Show("Personal eliminado correctamente.", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarGrillaPersonal();
@@ -538,6 +541,7 @@ namespace pryErpChalimond
                 });
 
                 string estadoTexto = nuevoEstado ? "Activado" : "Desactivado";
+                clsAuditoria.Registrar(clsSesion.Usuario, "Personal", "ModificarEstado", $"Se cambió el estado del personal ID: {selectedIdPersonal} a {estadoTexto}.");
                 MessageBox.Show($"El personal ha sido {estadoTexto} en el sistema.", "Cambio de Estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Recargar la grilla principal de personal para reflejar el estado Activo
@@ -575,6 +579,8 @@ namespace pryErpChalimond
                     new OleDbParameter("?", valor)
                 });
 
+                clsAuditoria.Registrar(clsSesion.Usuario, "PersonalContactos", "Crear", $"Se agregó contacto tipo '{tipo}' para el personal ID: {selectedIdPersonal}.");
+
                 txtValor.Clear();
                 txtValor.Focus();
                 CargarGrillaContactos(selectedIdPersonal);
@@ -603,6 +609,8 @@ namespace pryErpChalimond
                     clsConexion.EjecutarConsulta("DELETE FROM PersonalContactos WHERE IdContacto = ?", new OleDbParameter[] {
                         new OleDbParameter("?", idContacto)
                     });
+
+                    clsAuditoria.Registrar(clsSesion.Usuario, "PersonalContactos", "Eliminar", $"Se eliminó el contacto ID: {idContacto} del personal ID: {selectedIdPersonal}.");
 
                     CargarGrillaContactos(selectedIdPersonal);
                 }

@@ -40,9 +40,17 @@ namespace pryErpChalimond
             try
             {
                 DataTable dt = clsConexion.ObtenerTabla("SELECT IdPersonal, (Apellido + ', ' + Nombre) AS NombreCompleto FROM Personal WHERE Activo = Yes ORDER BY Apellido, Nombre");
+                
+                // Agregar opción para permitir no asociar personal al momento del registro
+                DataRow newRow = dt.NewRow();
+                newRow["IdPersonal"] = -1;
+                newRow["NombreCompleto"] = "(Ninguno - Asociar más tarde)";
+                dt.Rows.InsertAt(newRow, 0);
+
                 cmbPersonal.DataSource = dt;
                 cmbPersonal.DisplayMember = "NombreCompleto";
                 cmbPersonal.ValueMember = "IdPersonal";
+                cmbPersonal.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -69,12 +77,13 @@ namespace pryErpChalimond
 
             if (cmbPersonal.SelectedValue == null)
             {
-                lblError.Text = "Seleccione un personal válido.";
+                lblError.Text = "Seleccione un personal o la opción '(Ninguno)'.";
                 return;
             }
 
             int idPerfil = Convert.ToInt32(cmbRol.SelectedValue);
-            int idPersonal = Convert.ToInt32(cmbPersonal.SelectedValue);
+            int selectedPersonalId = Convert.ToInt32(cmbPersonal.SelectedValue);
+            object idPersonal = selectedPersonalId == -1 ? DBNull.Value : (object)selectedPersonalId;
 
             try
             {
@@ -88,16 +97,24 @@ namespace pryErpChalimond
                     return;
                 }
 
-                // Insertar nuevo usuario
+                // Insertar nuevo usuario (admite IdPersonal como nulo)
                 string sqlInsert = "INSERT INTO Usuarios (NombreUsuario, Contrasena, IdPerfil, IdPersonal, IntentosFallidos, LoginCount) VALUES (?, ?, ?, ?, 0, 0)";
                 OleDbParameter[] parameters = new OleDbParameter[] {
                     new OleDbParameter("?", usuario),
                     new OleDbParameter("?", contrasena),
                     new OleDbParameter("?", idPerfil),
-                    new OleDbParameter("?", idPersonal)
+                    idPersonal == DBNull.Value ? new OleDbParameter("?", DBNull.Value) { OleDbType = OleDbType.Integer } : new OleDbParameter("?", idPersonal)
                 };
 
                 clsConexion.EjecutarConsulta(sqlInsert, parameters);
+
+                // Registrar auditoría de creación de usuario
+                string operador = clsSesion.Usuario != "desconocido" ? clsSesion.Usuario : usuario;
+                string detalleAuditoria = clsSesion.Usuario != "desconocido" 
+                    ? $"El administrador '{clsSesion.Usuario}' registró al nuevo usuario '{usuario}' con perfil ID: {idPerfil}."
+                    : $"Auto-registro de nuevo usuario: '{usuario}' con perfil ID: {idPerfil}.";
+                
+                clsAuditoria.Registrar(operador, "Seguridad", "RegistroUsuario", detalleAuditoria);
 
                 MessageBox.Show("Usuario registrado exitosamente. Ahora puede iniciar sesión.", "Registro Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();

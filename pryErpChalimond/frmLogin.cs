@@ -70,6 +70,10 @@ namespace pryErpChalimond
 
                     if (dbContrasena == contrasena)
                     {
+                        // Inicializar variables globales de sesión
+                        clsSesion.Usuario = usuario;
+                        clsSesion.Rol = perfil;
+
                         // Login correcto: reiniciar intentos fallidos, incrementar contador de logins, registrar auditoría
                         string sqlUpdate = "UPDATE Usuarios SET IntentosFallidos = 0, LoginCount = LoginCount + 1 WHERE IdUsuario = ?";
                         clsConexion.EjecutarConsulta(sqlUpdate, new OleDbParameter[] { new OleDbParameter("?", idUsuario) });
@@ -140,22 +144,7 @@ namespace pryErpChalimond
 
         private void RegistrarAuditoria(string usuario, bool exitoso, string detalle)
         {
-            try
-            {
-                string sql = "INSERT INTO AuditoriaSesion (NombreUsuario, FechaHora, Exitoso, Detalle) VALUES (?, ?, ?, ?)";
-                OleDbParameter[] parameters = new OleDbParameter[] {
-                    new OleDbParameter("?", usuario),
-                    new OleDbParameter("?", DateTime.Now),
-                    new OleDbParameter("?", exitoso),
-                    new OleDbParameter("?", detalle)
-                };
-                clsConexion.EjecutarConsulta(sql, parameters);
-            }
-            catch (Exception ex)
-            {
-                // No bloquear el login por fallas de auditoría, pero registrar en consola.
-                Console.WriteLine("Error al grabar auditoría: " + ex.Message);
-            }
+            clsAuditoria.Registrar(usuario, "Seguridad", "Login", detalle, exitoso);
         }
 
         private void btnSalir_Click(object sender, EventArgs e)

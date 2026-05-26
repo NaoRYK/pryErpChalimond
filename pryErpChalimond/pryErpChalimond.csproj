@@ -78,6 +78,12 @@
     <Compile Include="frmAuditoria.Designer.cs">
       <DependentUpon>frmAuditoria.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUsuarios.Designer.cs">
+      <DependentUpon>frmUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmPersonal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,8 @@
     </Compile>
 
     <Compile Include="clsConexion.cs" />
+    <Compile Include="clsSesion.cs" />
+    <Compile Include="clsAuditoria.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Windows.Forms;
 
 namespace pryErpChalimond
@@ -13,6 +15,18 @@ namespace pryErpChalimond
 
         private void frmAuditoria_Load(object sender, EventArgs e)
         {
+            // Inicializar combo de filtros
+            cmbExitosoFiltro.Items.Clear();
+            cmbExitosoFiltro.Items.Add("Todos");
+            cmbExitosoFiltro.Items.Add("Inicio Exitoso");
+            cmbExitosoFiltro.Items.Add("Intento Fallido");
+            cmbExitosoFiltro.SelectedIndex = 0;
+
+            // Configurar DateTimePickers por defecto con la fecha actual
+            dtpDesde.Value = DateTime.Today;
+            dtpHasta.Value = DateTime.Today;
+
+            // Cargar datos
             CargarAuditorias();
         }
 
@@ -20,17 +34,55 @@ namespace pryErpChalimond
         {
             try
             {
-                string sql = "SELECT NombreUsuario, FechaHora, Exitoso, Detalle FROM AuditoriaSesion ORDER BY FechaHora DESC";
-                DataTable dt = clsConexion.ObtenerTabla(sql);
+                string sql = "SELECT NombreUsuario, FechaHora, Modulo, Accion, Exitoso, Detalle FROM AuditoriaSesion WHERE 1=1";
+                List<OleDbParameter> parameters = new List<OleDbParameter>();
+
+                // Filtro por usuario (búsqueda parcial insensible a mayúsculas/minúsculas)
+                string usuarioFiltro = txtUserFiltro.Text.Trim();
+                if (!string.IsNullOrEmpty(usuarioFiltro))
+                {
+                    sql += " AND NombreUsuario LIKE ?";
+                    parameters.Add(new OleDbParameter("?", OleDbType.VarWChar) { Value = "%" + usuarioFiltro + "%" });
+                }
+
+                // Filtro por resultado (Exitoso)
+                if (cmbExitosoFiltro.SelectedIndex == 1) // Inicio Exitoso
+                {
+                    sql += " AND Exitoso = ?";
+                    parameters.Add(new OleDbParameter("?", OleDbType.Boolean) { Value = true });
+                }
+                else if (cmbExitosoFiltro.SelectedIndex == 2) // Intento Fallido
+                {
+                    sql += " AND Exitoso = ?";
+                    parameters.Add(new OleDbParameter("?", OleDbType.Boolean) { Value = false });
+                }
+
+                // Filtro por rango de fechas
+                if (chkFechaFiltro.Checked)
+                {
+                    // Desde el inicio del día (00:00:00) hasta el final del día (23:59:59)
+                    DateTime fechaDesde = dtpDesde.Value.Date;
+                    DateTime fechaHasta = dtpHasta.Value.Date.AddDays(1).AddSeconds(-1);
+
+                    sql += " AND FechaHora >= ? AND FechaHora <= ?";
+                    parameters.Add(new OleDbParameter("?", OleDbType.Date) { Value = fechaDesde });
+                    parameters.Add(new OleDbParameter("?", OleDbType.Date) { Value = fechaHasta });
+                }
+
+                sql += " ORDER BY FechaHora DESC";
+
+                DataTable dt = clsConexion.ObtenerTabla(sql, parameters.Count > 0 ? parameters.ToArray() : null);
                 dgvAuditoria.DataSource = dt;
 
                 // Cambiar cabeceras para mostrar nombres legibles
                 if (dgvAuditoria.Columns.Count > 0)
                 {
-                    dgvAuditoria.Columns["NombreUsuario"].HeaderText = "Usuario";
-                    dgvAuditoria.Columns["FechaHora"].HeaderText = "Fecha y Hora";
-                    dgvAuditoria.Columns["Exitoso"].HeaderText = "Exitoso";
-                    dgvAuditoria.Columns["Detalle"].HeaderText = "Detalle de Evento";
+                    if (dgvAuditoria.Columns.Contains("NombreUsuario")) dgvAuditoria.Columns["NombreUsuario"].HeaderText = "Usuario";
+                    if (dgvAuditoria.Columns.Contains("FechaHora")) dgvAuditoria.Columns["FechaHora"].HeaderText = "Fecha y Hora";
+                    if (dgvAuditoria.Columns.Contains("Modulo")) dgvAuditoria.Columns["Modulo"].HeaderText = "Módulo";
+                    if (dgvAuditoria.Columns.Contains("Accion")) dgvAuditoria.Columns["Accion"].HeaderText = "Acción";
+                    if (dgvAuditoria.Columns.Contains("Exitoso")) dgvAuditoria.Columns["Exitoso"].HeaderText = "Exitoso";
+                    if (dgvAuditoria.Columns.Contains("Detalle")) dgvAuditoria.Columns["Detalle"].HeaderText = "Detalle de Evento";
                 }
             }
             catch (Exception ex)
@@ -42,6 +94,27 @@ namespace pryErpChalimond
         private void btnRefrescar_Click(object sender, EventArgs e)
         {
             CargarAuditorias();
+        }
+
+        private void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            CargarAuditorias();
+        }
+
+        private void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            txtUserFiltro.Clear();
+            cmbExitosoFiltro.SelectedIndex = 0;
+            chkFechaFiltro.Checked = false;
+            dtpDesde.Value = DateTime.Today;
+            dtpHasta.Value = DateTime.Today;
+            CargarAuditorias();
+        }
+
+        private void chkFechaFiltro_CheckedChanged(object sender, EventArgs e)
+        {
+            dtpDesde.Enabled = chkFechaFiltro.Checked;
+            dtpHasta.Enabled = chkFechaFiltro.Checked;
         }
     }
 }
