@@ -198,7 +198,7 @@ namespace pryErpChalimond
                         Longitud DOUBLE,
                         UbicacionGeografica VARCHAR(255),
                         IdProvincia INT NOT NULL,
-                        IdLocalidad INT NOT NULL,
+                        IdLocalidad INT,
                         Activo YESNO DEFAULT YES
                     )";
                     EjecutarComando(conn, sql);
@@ -215,6 +215,23 @@ namespace pryErpChalimond
                         catch (Exception ex)
                         {
                             Console.WriteLine("Error al agregar columna UbicacionGeografica a Personal: " + ex.Message);
+                        }
+                    }
+
+                    // Asegurarse de que IdLocalidad permita valores nulos (alterando la columna)
+                    try
+                    {
+                        EjecutarComando(conn, "ALTER TABLE Personal ALTER COLUMN IdLocalidad INT NULL");
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            EjecutarComando(conn, "ALTER TABLE Personal ALTER COLUMN IdLocalidad INT");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error al hacer nullable la columna IdLocalidad: " + ex.Message);
                         }
                     }
                 }

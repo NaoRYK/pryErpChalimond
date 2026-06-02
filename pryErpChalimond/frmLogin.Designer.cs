@@ -17,6 +17,7 @@ namespace pryErpChalimond
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.pnlBackground = new System.Windows.Forms.Panel();
             this.pnlCard = new System.Windows.Forms.Panel();
             this.lblRegistrarse = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@ namespace pryErpChalimond
             this.pnlBackground.Name = "pnlBackground";
             this.pnlBackground.Size = new System.Drawing.Size(464, 521);
             this.pnlBackground.TabIndex = 0;
+            this.pnlBackground.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlBackground_Paint);
             // 
             // pnlCard
             // 
@@ -75,7 +77,7 @@ namespace pryErpChalimond
             this.lblRegistrarse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(140)))), ((int)(((byte)(248)))));
             this.lblRegistrarse.Location = new System.Drawing.Point(220, 395);
             this.lblRegistrarse.Name = "lblRegistrarse";
-            this.lblRegistrarse.Size = new System.Drawing.Size(77, 17);
+            this.lblRegistrarse.Size = new System.Drawing.Size(70, 17);
             this.lblRegistrarse.TabIndex = 12;
             this.lblRegistrarse.Text = "Regístrate";
             this.lblRegistrarse.Click += new System.EventHandler(this.lblRegistrarse_Click);
@@ -87,9 +89,9 @@ namespace pryErpChalimond
             this.lblNoCuenta.AutoSize = true;
             this.lblNoCuenta.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.lblNoCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.lblNoCuenta.Location = new System.Drawing.Point(85, 395);
+            this.lblNoCuenta.Location = new System.Drawing.Point(83, 395);
             this.lblNoCuenta.Name = "lblNoCuenta";
-            this.lblNoCuenta.Size = new System.Drawing.Size(137, 17);
+            this.lblNoCuenta.Size = new System.Drawing.Size(143, 17);
             this.lblNoCuenta.TabIndex = 11;
             this.lblNoCuenta.Text = "¿No tienes una cuenta?";
             // 
@@ -228,11 +230,13 @@ namespace pryErpChalimond
             // 
             // frmLogin
             // 
+            this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 521);
             this.Controls.Add(this.pnlBackground);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Iniciar Sesión";

@@ -20,6 +20,7 @@ namespace pryErpChalimond
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUsuarios));
             this.lblTitulo = new System.Windows.Forms.Label();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.pnlEditar = new System.Windows.Forms.Panel();
@@ -42,7 +43,7 @@ namespace pryErpChalimond
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(35, 30);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(277, 37);
+            this.lblTitulo.Size = new System.Drawing.Size(272, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Gestión de Usuarios";
             // 
@@ -170,7 +171,7 @@ namespace pryErpChalimond
             this.lblPersonalAsociar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblPersonalAsociar.Location = new System.Drawing.Point(22, 190);
             this.lblPersonalAsociar.Name = "lblPersonalAsociar";
-            this.lblPersonalAsociar.Size = new System.Drawing.Size(115, 17);
+            this.lblPersonalAsociar.Size = new System.Drawing.Size(125, 17);
             this.lblPersonalAsociar.TabIndex = 4;
             this.lblPersonalAsociar.Text = "Asociar a Personal:";
             // 
@@ -181,7 +182,7 @@ namespace pryErpChalimond
             this.chkEsAdmin.ForeColor = System.Drawing.Color.White;
             this.chkEsAdmin.Location = new System.Drawing.Point(25, 145);
             this.chkEsAdmin.Name = "chkEsAdmin";
-            this.chkEsAdmin.Size = new System.Drawing.Size(124, 23);
+            this.chkEsAdmin.Size = new System.Drawing.Size(125, 23);
             this.chkEsAdmin.TabIndex = 3;
             this.chkEsAdmin.Text = "Administrador";
             this.chkEsAdmin.UseVisualStyleBackColor = true;
@@ -205,7 +206,7 @@ namespace pryErpChalimond
             this.lblUsuarioSel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblUsuarioSel.Location = new System.Drawing.Point(22, 70);
             this.lblUsuarioSel.Name = "lblUsuarioSel";
-            this.lblUsuarioSel.Size = new System.Drawing.Size(133, 17);
+            this.lblUsuarioSel.Size = new System.Drawing.Size(143, 17);
             this.lblUsuarioSel.TabIndex = 1;
             this.lblUsuarioSel.Text = "Usuario Seleccionado:";
             // 
@@ -216,7 +217,7 @@ namespace pryErpChalimond
             this.lblTituloEditar.ForeColor = System.Drawing.Color.White;
             this.lblTituloEditar.Location = new System.Drawing.Point(20, 20);
             this.lblTituloEditar.Name = "lblTituloEditar";
-            this.lblTituloEditar.Size = new System.Drawing.Size(168, 25);
+            this.lblTituloEditar.Size = new System.Drawing.Size(164, 25);
             this.lblTituloEditar.TabIndex = 0;
             this.lblTituloEditar.Text = "Modificar Usuario";
             // 
@@ -225,11 +226,13 @@ namespace pryErpChalimond
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.AcceptButton = this.btnGuardar;
             this.ClientSize = new System.Drawing.Size(848, 607);
             this.Controls.Add(this.pnlEditar);
             this.Controls.Add(this.dgvUsuarios);
             this.Controls.Add(this.lblTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmUsuarios";
             this.Text = "frmUsuarios";
             this.Load += new System.EventHandler(this.frmUsuarios_Load);

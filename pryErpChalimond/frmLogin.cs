@@ -187,5 +187,10 @@ namespace pryErpChalimond
         {
             pnlPasswordUnderline.BackColor = Color.FromArgb(71, 85, 105);
         }
+
+        private void pnlBackground_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace pryErpChalimond
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar provincias: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar provincias: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -44,6 +44,9 @@ namespace pryErpChalimond
         {
             if (cmbProvincia.SelectedValue == null || !(cmbProvincia.SelectedValue is int))
             {
+                cmbLocalidad.DataSource = null;
+                cmbLocalidad.Items.Clear();
+                cmbLocalidad.Enabled = false;
                 return;
             }
 
@@ -94,6 +97,8 @@ namespace pryErpChalimond
         {
             try
             {
+                int currentId = selectedIdPersonal;
+
                 string sql = @"
                     SELECT P.IdPersonal, P.DNI, P.Apellido, P.Nombre, P.Direccion, P.Latitud, P.Longitud, P.UbicacionGeografica, 
                            PR.NombreProvincia, L.NombreLocalidad, P.Activo, P.IdProvincia, P.IdLocalidad
@@ -121,6 +126,20 @@ namespace pryErpChalimond
                 if (dgvPersonal.Columns.Contains("NombreProvincia")) dgvPersonal.Columns["NombreProvincia"].HeaderText = "Provincia";
                 if (dgvPersonal.Columns.Contains("NombreLocalidad")) dgvPersonal.Columns["NombreLocalidad"].HeaderText = "Localidad";
                 if (dgvPersonal.Columns.Contains("Activo")) dgvPersonal.Columns["Activo"].HeaderText = "Activo";
+
+                // Restaurar la selección si corresponde
+                if (currentId != -1)
+                {
+                    foreach (DataGridViewRow row in dgvPersonal.Rows)
+                    {
+                        if (Convert.ToInt32(row.Cells["IdPersonal"].Value) == currentId)
+                        {
+                            row.Selected = true;
+                            dgvPersonal.CurrentCell = row.Cells["DNI"];
+                            break;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -179,15 +198,58 @@ namespace pryErpChalimond
             string nombre = txtNombre.Text.Trim();
             string direccion = txtDireccion.Text.Trim();
 
-            if (string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(apellido) || string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(direccion))
+            if (string.IsNullOrEmpty(dni))
             {
-                MessageBox.Show("DNI, Apellido, Nombre y Dirección son obligatorios.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El campo DNI es obligatorio.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDni.Focus();
+                return;
+            }
+
+            // Validar DNI argentino
+            if (!System.Text.RegularExpressions.Regex.IsMatch(dni, @"^(\d{7,8}|\d{1,2}\.\d{3}\.\d{3})$"))
+            {
+                MessageBox.Show("El DNI debe ser un número válido de 7 u 8 dígitos (ej: 12345678 o 12.345.678).", "Formato de DNI Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDni.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(apellido))
+            {
+                MessageBox.Show("El campo Apellido es obligatorio.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtApellido.Focus();
+                return;
+            }
+            if (apellido.Length < 2)
+            {
+                MessageBox.Show("El Apellido debe tener al menos 2 caracteres.", "Formato Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtApellido.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(nombre))
+            {
+                MessageBox.Show("El campo Nombre es obligatorio.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNombre.Focus();
+                return;
+            }
+            if (nombre.Length < 2)
+            {
+                MessageBox.Show("El Nombre debe tener al menos 2 caracteres.", "Formato Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNombre.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(direccion))
+            {
+                MessageBox.Show("El campo Dirección es obligatorio.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDireccion.Focus();
                 return;
             }
 
             if (cmbProvincia.SelectedValue == null)
             {
                 MessageBox.Show("Debe seleccionar una provincia.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbProvincia.Focus();
                 return;
             }
 
@@ -204,6 +266,7 @@ namespace pryErpChalimond
                 if (cmbLocalidad.SelectedValue == null || !(cmbLocalidad.SelectedValue is int))
                 {
                     MessageBox.Show("Debe seleccionar una localidad para la provincia de Córdoba.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbLocalidad.Focus();
                     return;
                 }
                 idLocalidad = Convert.ToInt32(cmbLocalidad.SelectedValue);
@@ -305,7 +368,15 @@ namespace pryErpChalimond
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar personal: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string message = ex.Message;
+                if (message.Contains("Personal.IdLocalidad") || message.Contains("idLocalidad") || message.Contains("Localidades"))
+                {
+                    MessageBox.Show("Error de validación: Debe especificar una localidad válida para la provincia seleccionada.", "Debe ingresar una localidad", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Error al guardar personal: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -362,6 +433,7 @@ namespace pryErpChalimond
             txtNombre.Clear();
             txtDireccion.Clear();
             txtUbicacionGeografica.Clear();
+            txtDireccionAdicional.Clear();
             if (cmbProvincia.Items.Count > 0) cmbProvincia.SelectedIndex = 0;
             txtDni.Focus();
             CargarDatosContactoSeleccionado();
@@ -412,7 +484,6 @@ namespace pryErpChalimond
             cmbTipo.Items.Clear();
             cmbTipo.Items.Add("Email");
             cmbTipo.Items.Add("Teléfono");
-            cmbTipo.Items.Add("Dirección Adicional");
             cmbTipo.Items.Add("Instagram");
             cmbTipo.Items.Add("Facebook");
             cmbTipo.Items.Add("LinkedIn");
@@ -436,6 +507,8 @@ namespace pryErpChalimond
                 txtValor.Enabled = false;
                 cmbTipo.Enabled = false;
                 dgvContactos.DataSource = null;
+
+                CargarDireccionesAdicionales();
                 return;
             }
 
@@ -461,8 +534,11 @@ namespace pryErpChalimond
 
                 isUpdatingUI = false;
 
-                // 2. Obtener contactos
+                // 2. Obtener contactos (excluyendo direcciones adicionales)
                 CargarGrillaContactos(selectedIdPersonal);
+
+                // 3. Cargar direcciones adicionales
+                CargarDireccionesAdicionales();
             }
             catch (Exception ex)
             {
@@ -475,7 +551,7 @@ namespace pryErpChalimond
         {
             try
             {
-                string sql = "SELECT IdContacto, Tipo, Valor FROM PersonalContactos WHERE IdPersonal = ? ORDER BY Tipo, Valor";
+                string sql = "SELECT IdContacto, Tipo, Valor FROM PersonalContactos WHERE IdPersonal = ? AND Tipo <> 'Dirección Adicional' ORDER BY Tipo, Valor";
                 DataTable dt = clsConexion.ObtenerTabla(sql, new OleDbParameter[] { new OleDbParameter("?", idPersonal) });
 
                 dgvContactos.DataSource = dt;
@@ -703,6 +779,107 @@ namespace pryErpChalimond
             }
 
             return false;
+        }
+
+        private void CargarDireccionesAdicionales()
+        {
+            lstDireccionesAdicionales.DataSource = null;
+            lstDireccionesAdicionales.Items.Clear();
+
+            if (selectedIdPersonal == -1)
+            {
+                txtDireccionAdicional.Clear();
+                txtDireccionAdicional.Enabled = false;
+                btnAgregarDireccionAdicional.Enabled = false;
+                btnEliminarDireccionAdicional.Enabled = false;
+                return;
+            }
+
+            txtDireccionAdicional.Enabled = true;
+            btnAgregarDireccionAdicional.Enabled = true;
+            btnEliminarDireccionAdicional.Enabled = true;
+
+            try
+            {
+                DataTable dt = clsConexion.ObtenerTabla("SELECT IdContacto, Valor FROM PersonalContactos WHERE IdPersonal = ? AND Tipo = 'Dirección Adicional' ORDER BY Valor", new OleDbParameter[] {
+                    new OleDbParameter("?", selectedIdPersonal)
+                });
+
+                lstDireccionesAdicionales.DataSource = dt;
+                lstDireccionesAdicionales.DisplayMember = "Valor";
+                lstDireccionesAdicionales.ValueMember = "IdContacto";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar direcciones adicionales: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAgregarDireccionAdicional_Click(object sender, EventArgs e)
+        {
+            if (selectedIdPersonal == -1)
+            {
+                MessageBox.Show("Debe seleccionar un personal válido.", "Selección Requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string valor = txtDireccionAdicional.Text.Trim();
+
+            if (string.IsNullOrEmpty(valor))
+            {
+                MessageBox.Show("Por favor complete el valor de la dirección adicional.", "Campos Requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string sql = "INSERT INTO PersonalContactos (IdPersonal, Tipo, Valor) VALUES (?, 'Dirección Adicional', ?)";
+                clsConexion.EjecutarConsulta(sql, new OleDbParameter[] {
+                    new OleDbParameter("?", selectedIdPersonal),
+                    new OleDbParameter("?", valor)
+                });
+
+                clsAuditoria.Registrar(clsSesion.Usuario, "PersonalContactos", "Crear", $"Se agregó dirección adicional '{valor}' para el personal ID: {selectedIdPersonal}.");
+
+                txtDireccionAdicional.Clear();
+                txtDireccionAdicional.Focus();
+                CargarDireccionesAdicionales();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al agregar dirección adicional: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEliminarDireccionAdicional_Click(object sender, EventArgs e)
+        {
+            if (lstDireccionesAdicionales.SelectedValue == null)
+            {
+                MessageBox.Show("Debe seleccionar una dirección de la lista para eliminar.", "Selección Requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int idContacto = Convert.ToInt32(lstDireccionesAdicionales.SelectedValue);
+            string valor = lstDireccionesAdicionales.Text;
+
+            DialogResult result = MessageBox.Show($"¿Está seguro de que desea eliminar la dirección adicional '{valor}'?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    clsConexion.EjecutarConsulta("DELETE FROM PersonalContactos WHERE IdContacto = ?", new OleDbParameter[] {
+                        new OleDbParameter("?", idContacto)
+                    });
+
+                    clsAuditoria.Registrar(clsSesion.Usuario, "PersonalContactos", "Eliminar", $"Se eliminó la dirección adicional ID: {idContacto} del personal ID: {selectedIdPersonal}.");
+
+                    CargarDireccionesAdicionales();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al eliminar dirección adicional: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

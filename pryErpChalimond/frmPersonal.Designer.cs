@@ -20,6 +20,7 @@ namespace pryErpChalimond
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPersonal));
             this.lblTitulo = new System.Windows.Forms.Label();
             this.pnlForm = new System.Windows.Forms.Panel();
             this.btnVerMapa = new System.Windows.Forms.Button();
@@ -37,14 +38,17 @@ namespace pryErpChalimond
             this.lblApellido = new System.Windows.Forms.Label();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.lblDni = new System.Windows.Forms.Label();
+            this.lblDireccionesAdicionales = new System.Windows.Forms.Label();
+            this.lstDireccionesAdicionales = new System.Windows.Forms.ListBox();
+            this.txtDireccionAdicional = new System.Windows.Forms.TextBox();
+            this.btnAgregarDireccionAdicional = new System.Windows.Forms.Button();
+            this.btnEliminarDireccionAdicional = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.dgvPersonal = new System.Windows.Forms.DataGridView();
             this.pnlDatosContainer = new System.Windows.Forms.Panel();
             this.pnlContactoContainer = new System.Windows.Forms.Panel();
-            this.btnTabDatos = new System.Windows.Forms.Button();
-            this.btnTabContactos = new System.Windows.Forms.Button();
             this.lblTipo = new System.Windows.Forms.Label();
             this.cmbTipo = new System.Windows.Forms.ComboBox();
             this.lblValor = new System.Windows.Forms.Label();
@@ -53,6 +57,8 @@ namespace pryErpChalimond
             this.btnEliminarContacto = new System.Windows.Forms.Button();
             this.chkActivo = new System.Windows.Forms.CheckBox();
             this.dgvContactos = new System.Windows.Forms.DataGridView();
+            this.btnTabDatos = new System.Windows.Forms.Button();
+            this.btnTabContactos = new System.Windows.Forms.Button();
             this.pnlForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPersonal)).BeginInit();
             this.pnlDatosContainer.SuspendLayout();
@@ -67,7 +73,7 @@ namespace pryErpChalimond
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(35, 20);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(269, 37);
+            this.lblTitulo.Size = new System.Drawing.Size(271, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Gestión de Personal";
             // 
@@ -89,11 +95,82 @@ namespace pryErpChalimond
             this.pnlForm.Controls.Add(this.lblApellido);
             this.pnlForm.Controls.Add(this.txtDni);
             this.pnlForm.Controls.Add(this.lblDni);
+            this.pnlForm.Controls.Add(this.lblDireccionesAdicionales);
+            this.pnlForm.Controls.Add(this.lstDireccionesAdicionales);
+            this.pnlForm.Controls.Add(this.txtDireccionAdicional);
+            this.pnlForm.Controls.Add(this.btnAgregarDireccionAdicional);
+            this.pnlForm.Controls.Add(this.btnEliminarDireccionAdicional);
             this.pnlForm.Location = new System.Drawing.Point(0, 0);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Size = new System.Drawing.Size(760, 210);
+            this.pnlForm.Size = new System.Drawing.Size(760, 285);
             this.pnlForm.TabIndex = 1;
             // 
+            // lblDireccionesAdicionales
+            // 
+            this.lblDireccionesAdicionales.AutoSize = true;
+            this.lblDireccionesAdicionales.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblDireccionesAdicionales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.lblDireccionesAdicionales.Location = new System.Drawing.Point(17, 200);
+            this.lblDireccionesAdicionales.Name = "lblDireccionesAdicionales";
+            this.lblDireccionesAdicionales.Size = new System.Drawing.Size(135, 15);
+            this.lblDireccionesAdicionales.TabIndex = 17;
+            this.lblDireccionesAdicionales.Text = "Direcciones Adicionales";
+            // 
+            // lstDireccionesAdicionales
+            // 
+            this.lstDireccionesAdicionales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lstDireccionesAdicionales.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstDireccionesAdicionales.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.lstDireccionesAdicionales.ForeColor = System.Drawing.Color.White;
+            this.lstDireccionesAdicionales.FormattingEnabled = true;
+            this.lstDireccionesAdicionales.ItemHeight = 17;
+            this.lstDireccionesAdicionales.Location = new System.Drawing.Point(20, 220);
+            this.lstDireccionesAdicionales.Name = "lstDireccionesAdicionales";
+            this.lstDireccionesAdicionales.Size = new System.Drawing.Size(400, 53);
+            this.lstDireccionesAdicionales.TabIndex = 18;
+            // 
+            // txtDireccionAdicional
+            // 
+            this.txtDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.txtDireccionAdicional.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtDireccionAdicional.ForeColor = System.Drawing.Color.White;
+            this.txtDireccionAdicional.Location = new System.Drawing.Point(430, 220);
+            this.txtDireccionAdicional.Name = "txtDireccionAdicional";
+            this.txtDireccionAdicional.Size = new System.Drawing.Size(200, 25);
+            this.txtDireccionAdicional.TabIndex = 19;
+            // 
+            // btnAgregarDireccionAdicional
+            // 
+            this.btnAgregarDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
+            this.btnAgregarDireccionAdicional.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAgregarDireccionAdicional.FlatAppearance.BorderSize = 0;
+            this.btnAgregarDireccionAdicional.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregarDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnAgregarDireccionAdicional.ForeColor = System.Drawing.Color.White;
+            this.btnAgregarDireccionAdicional.Location = new System.Drawing.Point(640, 219);
+            this.btnAgregarDireccionAdicional.Name = "btnAgregarDireccionAdicional";
+            this.btnAgregarDireccionAdicional.Size = new System.Drawing.Size(50, 27);
+            this.btnAgregarDireccionAdicional.TabIndex = 20;
+            this.btnAgregarDireccionAdicional.Text = "Agregar";
+            this.btnAgregarDireccionAdicional.UseVisualStyleBackColor = false;
+            this.btnAgregarDireccionAdicional.Click += new System.EventHandler(this.btnAgregarDireccionAdicional_Click);
+            // 
+            // btnEliminarDireccionAdicional
+            // 
+            this.btnEliminarDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.btnEliminarDireccionAdicional.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEliminarDireccionAdicional.FlatAppearance.BorderSize = 0;
+            this.btnEliminarDireccionAdicional.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminarDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnEliminarDireccionAdicional.ForeColor = System.Drawing.Color.White;
+            this.btnEliminarDireccionAdicional.Location = new System.Drawing.Point(695, 219);
+            this.btnEliminarDireccionAdicional.Name = "btnEliminarDireccionAdicional";
+            this.btnEliminarDireccionAdicional.Size = new System.Drawing.Size(45, 27);
+            this.btnEliminarDireccionAdicional.TabIndex = 21;
+            this.btnEliminarDireccionAdicional.Text = "Borrar";
+            this.btnEliminarDireccionAdicional.UseVisualStyleBackColor = false;
+            this.btnEliminarDireccionAdicional.Click += new System.EventHandler(this.btnEliminarDireccionAdicional_Click);
             // 
             // btnVerMapa
             // 
@@ -129,7 +206,7 @@ namespace pryErpChalimond
             this.lblUbicacionGeografica.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblUbicacionGeografica.Location = new System.Drawing.Point(377, 140);
             this.lblUbicacionGeografica.Name = "lblUbicacionGeografica";
-            this.lblUbicacionGeografica.Size = new System.Drawing.Size(207, 15);
+            this.lblUbicacionGeografica.Size = new System.Drawing.Size(211, 15);
             this.lblUbicacionGeografica.TabIndex = 12;
             this.lblUbicacionGeografica.Text = "Ubicación (Coordenadas o Link Maps)";
             // 
@@ -278,7 +355,7 @@ namespace pryErpChalimond
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.Location = new System.Drawing.Point(0, 220);
+            this.btnGuardar.Location = new System.Drawing.Point(0, 295);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(150, 35);
             this.btnGuardar.TabIndex = 2;
@@ -294,11 +371,11 @@ namespace pryErpChalimond
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(165, 220);
+            this.btnLimpiar.Location = new System.Drawing.Point(165, 295);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(120, 35);
             this.btnLimpiar.TabIndex = 3;
-            this.btnLimpiar.Text = "Limpiar / Nuevo";
+            this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -310,13 +387,66 @@ namespace pryErpChalimond
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
-            this.btnEliminar.Location = new System.Drawing.Point(640, 220);
+            this.btnEliminar.Location = new System.Drawing.Point(640, 295);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(120, 35);
             this.btnEliminar.TabIndex = 4;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
+            // dgvPersonal
+            // 
+            this.dgvPersonal.AllowUserToAddRows = false;
+            this.dgvPersonal.AllowUserToDeleteRows = false;
+            this.dgvPersonal.AllowUserToResizeRows = false;
+            this.dgvPersonal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPersonal.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPersonal.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.dgvPersonal.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvPersonal.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvPersonal.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPersonal.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvPersonal.ColumnHeadersHeight = 35;
+            this.dgvPersonal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPersonal.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvPersonal.EnableHeadersVisualStyles = false;
+            this.dgvPersonal.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.dgvPersonal.Location = new System.Drawing.Point(40, 420);
+            this.dgvPersonal.MultiSelect = false;
+            this.dgvPersonal.Name = "dgvPersonal";
+            this.dgvPersonal.ReadOnly = true;
+            this.dgvPersonal.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPersonal.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvPersonal.RowHeadersVisible = false;
+            this.dgvPersonal.RowTemplate.Height = 35;
+            this.dgvPersonal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPersonal.Size = new System.Drawing.Size(760, 180);
+            this.dgvPersonal.TabIndex = 5;
+            this.dgvPersonal.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPersonal_CellClick);
             // 
             // pnlDatosContainer
             // 
@@ -326,40 +456,8 @@ namespace pryErpChalimond
             this.pnlDatosContainer.Controls.Add(this.btnEliminar);
             this.pnlDatosContainer.Location = new System.Drawing.Point(40, 75);
             this.pnlDatosContainer.Name = "pnlDatosContainer";
-            this.pnlDatosContainer.Size = new System.Drawing.Size(760, 260);
+            this.pnlDatosContainer.Size = new System.Drawing.Size(760, 335);
             this.pnlDatosContainer.TabIndex = 1;
-            // 
-            // btnTabDatos
-            // 
-            this.btnTabDatos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.btnTabDatos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnTabDatos.FlatAppearance.BorderSize = 0;
-            this.btnTabDatos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTabDatos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnTabDatos.ForeColor = System.Drawing.Color.White;
-            this.btnTabDatos.Location = new System.Drawing.Point(400, 20);
-            this.btnTabDatos.Name = "btnTabDatos";
-            this.btnTabDatos.Size = new System.Drawing.Size(180, 35);
-            this.btnTabDatos.TabIndex = 6;
-            this.btnTabDatos.Text = "Información Básica";
-            this.btnTabDatos.UseVisualStyleBackColor = false;
-            this.btnTabDatos.Click += new System.EventHandler(this.btnTabDatos_Click);
-            // 
-            // btnTabContactos
-            // 
-            this.btnTabContactos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.btnTabContactos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnTabContactos.FlatAppearance.BorderSize = 0;
-            this.btnTabContactos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTabContactos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnTabContactos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.btnTabContactos.Location = new System.Drawing.Point(590, 20);
-            this.btnTabContactos.Name = "btnTabContactos";
-            this.btnTabContactos.Size = new System.Drawing.Size(210, 35);
-            this.btnTabContactos.TabIndex = 7;
-            this.btnTabContactos.Text = "Contactos y Direcciones";
-            this.btnTabContactos.UseVisualStyleBackColor = false;
-            this.btnTabContactos.Click += new System.EventHandler(this.btnTabContactos_Click);
             // 
             // pnlContactoContainer
             // 
@@ -370,11 +468,10 @@ namespace pryErpChalimond
             this.pnlContactoContainer.Controls.Add(this.txtValor);
             this.pnlContactoContainer.Controls.Add(this.btnAgregarContacto);
             this.pnlContactoContainer.Controls.Add(this.btnEliminarContacto);
-            this.pnlContactoContainer.Controls.Add(this.chkActivo);
             this.pnlContactoContainer.Controls.Add(this.dgvContactos);
             this.pnlContactoContainer.Location = new System.Drawing.Point(40, 75);
             this.pnlContactoContainer.Name = "pnlContactoContainer";
-            this.pnlContactoContainer.Size = new System.Drawing.Size(760, 260);
+            this.pnlContactoContainer.Size = new System.Drawing.Size(760, 335);
             this.pnlContactoContainer.TabIndex = 8;
             this.pnlContactoContainer.Visible = false;
             // 
@@ -456,19 +553,6 @@ namespace pryErpChalimond
             this.btnEliminarContacto.UseVisualStyleBackColor = false;
             this.btnEliminarContacto.Click += new System.EventHandler(this.btnEliminarContacto_Click);
             // 
-            // chkActivo
-            // 
-            this.chkActivo.AutoSize = true;
-            this.chkActivo.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.chkActivo.ForeColor = System.Drawing.Color.White;
-            this.chkActivo.Location = new System.Drawing.Point(650, 32);
-            this.chkActivo.Name = "chkActivo";
-            this.chkActivo.Size = new System.Drawing.Size(110, 21);
-            this.chkActivo.TabIndex = 6;
-            this.chkActivo.Text = "Personal Activo";
-            this.chkActivo.UseVisualStyleBackColor = true;
-            this.chkActivo.CheckedChanged += new System.EventHandler(this.chkActivo_CheckedChanged);
-            // 
             // dgvContactos
             // 
             this.dgvContactos.AllowUserToAddRows = false;
@@ -479,23 +563,9 @@ namespace pryErpChalimond
             this.dgvContactos.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvContactos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvContactos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvContactos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvContactos.ColumnHeadersHeight = 35;
             this.dgvContactos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvContactos.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvContactos.EnableHeadersVisualStyles = false;
             this.dgvContactos.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
@@ -504,96 +574,71 @@ namespace pryErpChalimond
             this.dgvContactos.Name = "dgvContactos";
             this.dgvContactos.ReadOnly = true;
             this.dgvContactos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvContactos.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvContactos.RowHeadersVisible = false;
             this.dgvContactos.RowTemplate.Height = 35;
             this.dgvContactos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvContactos.Size = new System.Drawing.Size(720, 170);
+            this.dgvContactos.Size = new System.Drawing.Size(720, 245);
             this.dgvContactos.TabIndex = 7;
             // 
-            // dgvPersonal
+            // btnTabDatos
             // 
-            this.dgvPersonal.AllowUserToAddRows = false;
-            this.dgvPersonal.AllowUserToDeleteRows = false;
-            this.dgvPersonal.AllowUserToResizeRows = false;
-            this.dgvPersonal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvPersonal.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPersonal.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.dgvPersonal.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvPersonal.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvPersonal.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvPersonal.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvPersonal.ColumnHeadersHeight = 35;
-            this.dgvPersonal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvPersonal.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvPersonal.EnableHeadersVisualStyles = false;
-            this.dgvPersonal.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.dgvPersonal.Location = new System.Drawing.Point(40, 345);
-            this.dgvPersonal.MultiSelect = false;
-            this.dgvPersonal.Name = "dgvPersonal";
-            this.dgvPersonal.ReadOnly = true;
-            this.dgvPersonal.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvPersonal.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvPersonal.RowHeadersVisible = false;
-            this.dgvPersonal.RowTemplate.Height = 35;
-            this.dgvPersonal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPersonal.Size = new System.Drawing.Size(760, 240);
-            this.dgvPersonal.TabIndex = 5;
-            this.dgvPersonal.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPersonal_CellClick);
+            this.btnTabDatos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnTabDatos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTabDatos.FlatAppearance.BorderSize = 0;
+            this.btnTabDatos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTabDatos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnTabDatos.ForeColor = System.Drawing.Color.White;
+            this.btnTabDatos.Location = new System.Drawing.Point(460, 20);
+            this.btnTabDatos.Name = "btnTabDatos";
+            this.btnTabDatos.Size = new System.Drawing.Size(160, 35);
+            this.btnTabDatos.TabIndex = 6;
+            this.btnTabDatos.Text = "Información Básica";
+            this.btnTabDatos.UseVisualStyleBackColor = false;
+            this.btnTabDatos.Click += new System.EventHandler(this.btnTabDatos_Click);
+            // 
+            // btnTabContactos
+            // 
+            this.btnTabContactos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.btnTabContactos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTabContactos.FlatAppearance.BorderSize = 0;
+            this.btnTabContactos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTabContactos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnTabContactos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.btnTabContactos.Location = new System.Drawing.Point(630, 20);
+            this.btnTabContactos.Name = "btnTabContactos";
+            this.btnTabContactos.Size = new System.Drawing.Size(120, 35);
+            this.btnTabContactos.TabIndex = 7;
+            this.btnTabContactos.Text = "Contactos";
+            this.btnTabContactos.UseVisualStyleBackColor = false;
+            this.btnTabContactos.Click += new System.EventHandler(this.btnTabContactos_Click);
             // 
             // frmPersonal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.ClientSize = new System.Drawing.Size(848, 607);
+            this.AcceptButton = this.btnGuardar;
+            this.ClientSize = new System.Drawing.Size(848, 640);
             this.Controls.Add(this.dgvPersonal);
             this.Controls.Add(this.pnlDatosContainer);
             this.Controls.Add(this.pnlContactoContainer);
             this.Controls.Add(this.btnTabDatos);
             this.Controls.Add(this.btnTabContactos);
             this.Controls.Add(this.lblTitulo);
+            this.Controls.Add(this.chkActivo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPersonal";
             this.Text = "frmPersonal";
             this.Load += new System.EventHandler(this.frmPersonal_Load);
             this.pnlForm.ResumeLayout(false);
             this.pnlForm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPersonal)).EndInit();
             this.pnlDatosContainer.ResumeLayout(false);
             this.pnlContactoContainer.ResumeLayout(false);
             this.pnlContactoContainer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContactos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPersonal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -634,5 +679,10 @@ namespace pryErpChalimond
         private System.Windows.Forms.Button btnEliminarContacto;
         private System.Windows.Forms.CheckBox chkActivo;
         private System.Windows.Forms.DataGridView dgvContactos;
+        private System.Windows.Forms.Label lblDireccionesAdicionales;
+        private System.Windows.Forms.ListBox lstDireccionesAdicionales;
+        private System.Windows.Forms.TextBox txtDireccionAdicional;
+        private System.Windows.Forms.Button btnAgregarDireccionAdicional;
+        private System.Windows.Forms.Button btnEliminarDireccionAdicional;
     }
 }

@@ -17,12 +17,13 @@ namespace pryErpChalimond
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRegister));
             this.pnlBackground = new System.Windows.Forms.Panel();
             this.pnlCard = new System.Windows.Forms.Panel();
-            this.lblRol = new System.Windows.Forms.Label();
-            this.cmbRol = new System.Windows.Forms.ComboBox();
             this.lblPersonal = new System.Windows.Forms.Label();
             this.cmbPersonal = new System.Windows.Forms.ComboBox();
+            this.lblRol = new System.Windows.Forms.Label();
+            this.cmbRol = new System.Windows.Forms.ComboBox();
             this.lblError = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnRegistrar = new System.Windows.Forms.Button();
@@ -71,6 +72,29 @@ namespace pryErpChalimond
             this.pnlCard.Size = new System.Drawing.Size(384, 500);
             this.pnlCard.TabIndex = 0;
             // 
+            // lblPersonal
+            // 
+            this.lblPersonal.AutoSize = true;
+            this.lblPersonal.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblPersonal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.lblPersonal.Location = new System.Drawing.Point(22, 305);
+            this.lblPersonal.Name = "lblPersonal";
+            this.lblPersonal.Size = new System.Drawing.Size(127, 17);
+            this.lblPersonal.TabIndex = 15;
+            this.lblPersonal.Text = "Vincular a Personal";
+            // 
+            // cmbPersonal
+            // 
+            this.cmbPersonal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.cmbPersonal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbPersonal.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cmbPersonal.ForeColor = System.Drawing.Color.White;
+            this.cmbPersonal.FormattingEnabled = true;
+            this.cmbPersonal.Location = new System.Drawing.Point(25, 327);
+            this.cmbPersonal.Name = "cmbPersonal";
+            this.cmbPersonal.Size = new System.Drawing.Size(334, 25);
+            this.cmbPersonal.TabIndex = 16;
             // 
             // lblRol
             // 
@@ -95,30 +119,6 @@ namespace pryErpChalimond
             this.cmbRol.Name = "cmbRol";
             this.cmbRol.Size = new System.Drawing.Size(334, 25);
             this.cmbRol.TabIndex = 13;
-            // 
-            // lblPersonal
-            // 
-            this.lblPersonal.AutoSize = true;
-            this.lblPersonal.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.lblPersonal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.lblPersonal.Location = new System.Drawing.Point(22, 305);
-            this.lblPersonal.Name = "lblPersonal";
-            this.lblPersonal.Size = new System.Drawing.Size(125, 17);
-            this.lblPersonal.TabIndex = 15;
-            this.lblPersonal.Text = "Vincular a Personal";
-            // 
-            // cmbPersonal
-            // 
-            this.cmbPersonal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.cmbPersonal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbPersonal.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbPersonal.ForeColor = System.Drawing.Color.White;
-            this.cmbPersonal.FormattingEnabled = true;
-            this.cmbPersonal.Location = new System.Drawing.Point(25, 327);
-            this.cmbPersonal.Name = "cmbPersonal";
-            this.cmbPersonal.Size = new System.Drawing.Size(334, 25);
-            this.cmbPersonal.TabIndex = 16;
             // 
             // lblError
             // 
@@ -227,7 +227,7 @@ namespace pryErpChalimond
             this.lblUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblUser.Location = new System.Drawing.Point(22, 117);
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(127, 17);
+            this.lblUser.Size = new System.Drawing.Size(128, 17);
             this.lblUser.TabIndex = 2;
             this.lblUser.Text = "Nombre de Usuario";
             // 
@@ -257,9 +257,11 @@ namespace pryErpChalimond
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AcceptButton = this.btnRegistrar;
             this.ClientSize = new System.Drawing.Size(464, 550);
             this.Controls.Add(this.pnlBackground);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmRegister";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Registrarse";

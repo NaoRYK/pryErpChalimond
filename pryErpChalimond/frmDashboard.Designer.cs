@@ -17,6 +17,7 @@ namespace pryErpChalimond
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
             this.lblWelcome = new System.Windows.Forms.Label();
             this.lblWelcomeSub = new System.Windows.Forms.Label();
             this.pnlStatPersonal = new System.Windows.Forms.Panel();
@@ -41,7 +42,7 @@ namespace pryErpChalimond
             this.lblWelcome.ForeColor = System.Drawing.Color.White;
             this.lblWelcome.Location = new System.Drawing.Point(40, 40);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(434, 45);
+            this.lblWelcome.Size = new System.Drawing.Size(431, 45);
             this.lblWelcome.TabIndex = 0;
             this.lblWelcome.Text = "Panel de Control - Principal";
             // 
@@ -52,7 +53,7 @@ namespace pryErpChalimond
             this.lblWelcomeSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblWelcomeSub.Location = new System.Drawing.Point(44, 90);
             this.lblWelcomeSub.Name = "lblWelcomeSub";
-            this.lblWelcomeSub.Size = new System.Drawing.Size(370, 21);
+            this.lblWelcomeSub.Size = new System.Drawing.Size(367, 21);
             this.lblWelcomeSub.TabIndex = 1;
             this.lblWelcomeSub.Text = "Resumen de estado de base de datos de Chalimond";
             // 
@@ -84,7 +85,7 @@ namespace pryErpChalimond
             this.lblPersonalTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblPersonalTitle.Location = new System.Drawing.Point(15, 15);
             this.lblPersonalTitle.Name = "lblPersonalTitle";
-            this.lblPersonalTitle.Size = new System.Drawing.Size(126, 19);
+            this.lblPersonalTitle.Size = new System.Drawing.Size(144, 19);
             this.lblPersonalTitle.TabIndex = 0;
             this.lblPersonalTitle.Text = "Personal Registrado";
             // 
@@ -116,7 +117,7 @@ namespace pryErpChalimond
             this.lblUsuariosTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblUsuariosTitle.Location = new System.Drawing.Point(15, 15);
             this.lblUsuariosTitle.Name = "lblUsuariosTitle";
-            this.lblUsuariosTitle.Size = new System.Drawing.Size(126, 19);
+            this.lblUsuariosTitle.Size = new System.Drawing.Size(143, 19);
             this.lblUsuariosTitle.TabIndex = 0;
             this.lblUsuariosTitle.Text = "Usuarios de Sistema";
             // 
@@ -148,7 +149,7 @@ namespace pryErpChalimond
             this.lblAuditoriaTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblAuditoriaTitle.Location = new System.Drawing.Point(15, 15);
             this.lblAuditoriaTitle.Name = "lblAuditoriaTitle";
-            this.lblAuditoriaTitle.Size = new System.Drawing.Size(127, 19);
+            this.lblAuditoriaTitle.Size = new System.Drawing.Size(159, 19);
             this.lblAuditoriaTitle.TabIndex = 0;
             this.lblAuditoriaTitle.Text = "Registros de Auditoría";
             // 
@@ -160,8 +161,7 @@ namespace pryErpChalimond
             this.lblInfoSystem.Name = "lblInfoSystem";
             this.lblInfoSystem.Size = new System.Drawing.Size(730, 200);
             this.lblInfoSystem.TabIndex = 5;
-            this.lblInfoSystem.Text = "Instrucciones de Uso:\n\n1. Utilice el Menú Lateral para navegar por el ERP.\n2. En " +
-    "el Módulo Personal puede registrar o modificar información base y abrir coordenadas en Google Maps.\n3. En el Módulo Contacto puede configurar múltiples vías de comunicación por persona y Activar/Desactivar accesos.\n4. El módulo Auditoría muestra los históricos del login.";
+            this.lblInfoSystem.Text = resources.GetString("lblInfoSystem.Text");
             // 
             // frmDashboard
             // 
@@ -176,6 +176,7 @@ namespace pryErpChalimond
             this.Controls.Add(this.lblWelcomeSub);
             this.Controls.Add(this.lblWelcome);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDashboard";
             this.Text = "Dashboard";
             this.Load += new System.EventHandler(this.frmDashboard_Load);

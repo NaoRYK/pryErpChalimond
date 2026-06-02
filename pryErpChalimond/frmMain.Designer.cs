@@ -17,6 +17,7 @@ namespace pryErpChalimond
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.btnSalirMain = new System.Windows.Forms.Button();
             this.btnAuditoria = new System.Windows.Forms.Button();
@@ -167,7 +168,7 @@ namespace pryErpChalimond
             this.lblBrandSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(140)))), ((int)(((byte)(248)))));
             this.lblBrandSubtitle.Location = new System.Drawing.Point(22, 45);
             this.lblBrandSubtitle.Name = "lblBrandSubtitle";
-            this.lblBrandSubtitle.Size = new System.Drawing.Size(107, 13);
+            this.lblBrandSubtitle.Size = new System.Drawing.Size(116, 13);
             this.lblBrandSubtitle.TabIndex = 1;
             this.lblBrandSubtitle.Text = "ERP BASE MODULAR";
             // 
@@ -178,7 +179,7 @@ namespace pryErpChalimond
             this.lblBrandTitle.ForeColor = System.Drawing.Color.White;
             this.lblBrandTitle.Location = new System.Drawing.Point(20, 18);
             this.lblBrandTitle.Name = "lblBrandTitle";
-            this.lblBrandTitle.Size = new System.Drawing.Size(113, 25);
+            this.lblBrandTitle.Size = new System.Drawing.Size(108, 25);
             this.lblBrandTitle.TabIndex = 0;
             this.lblBrandTitle.Text = "Chalimond";
             // 
@@ -213,7 +214,7 @@ namespace pryErpChalimond
             this.lblStatusRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblStatusRol.Location = new System.Drawing.Point(200, 9);
             this.lblStatusRol.Name = "lblStatusRol";
-            this.lblStatusRol.Size = new System.Drawing.Size(53, 15);
+            this.lblStatusRol.Size = new System.Drawing.Size(40, 15);
             this.lblStatusRol.TabIndex = 1;
             this.lblStatusRol.Text = "Rol: --";
             // 
@@ -224,7 +225,7 @@ namespace pryErpChalimond
             this.lblStatusUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(140)))), ((int)(((byte)(248)))));
             this.lblStatusUsuario.Location = new System.Drawing.Point(20, 9);
             this.lblStatusUsuario.Name = "lblStatusUsuario";
-            this.lblStatusUsuario.Size = new System.Drawing.Size(73, 15);
+            this.lblStatusUsuario.Size = new System.Drawing.Size(65, 15);
             this.lblStatusUsuario.TabIndex = 0;
             this.lblStatusUsuario.Text = "Usuario: --";
             // 
@@ -245,6 +246,7 @@ namespace pryErpChalimond
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlStatus);
             this.Controls.Add(this.pnlSidebar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1000, 600);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

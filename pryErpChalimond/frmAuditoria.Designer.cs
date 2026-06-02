@@ -20,6 +20,7 @@ namespace pryErpChalimond
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAuditoria));
             this.lblTitulo = new System.Windows.Forms.Label();
             this.dgvAuditoria = new System.Windows.Forms.DataGridView();
             this.btnRefrescar = new System.Windows.Forms.Button();
@@ -46,7 +47,7 @@ namespace pryErpChalimond
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(35, 30);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(434, 37);
+            this.lblTitulo.Size = new System.Drawing.Size(397, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Auditoría de Inicios de Sesión";
             // 
@@ -211,7 +212,7 @@ namespace pryErpChalimond
             this.lblDesde.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblDesde.Location = new System.Drawing.Point(290, 41);
             this.lblDesde.Name = "lblDesde";
-            this.lblDesde.Size = new System.Drawing.Size(44, 15);
+            this.lblDesde.Size = new System.Drawing.Size(45, 15);
             this.lblDesde.TabIndex = 5;
             this.lblDesde.Text = "Desde:";
             // 
@@ -222,7 +223,7 @@ namespace pryErpChalimond
             this.chkFechaFiltro.ForeColor = System.Drawing.Color.White;
             this.chkFechaFiltro.Location = new System.Drawing.Point(290, 15);
             this.chkFechaFiltro.Name = "chkFechaFiltro";
-            this.chkFechaFiltro.Size = new System.Drawing.Size(127, 21);
+            this.chkFechaFiltro.Size = new System.Drawing.Size(126, 21);
             this.chkFechaFiltro.TabIndex = 4;
             this.chkFechaFiltro.Text = "Filtrar por fecha";
             this.chkFechaFiltro.UseVisualStyleBackColor = true;
@@ -248,7 +249,7 @@ namespace pryErpChalimond
             this.lblExitosoFiltro.ForeColor = System.Drawing.Color.White;
             this.lblExitosoFiltro.Location = new System.Drawing.Point(150, 15);
             this.lblExitosoFiltro.Name = "lblExitosoFiltro";
-            this.lblExitosoFiltro.Size = new System.Drawing.Size(72, 17);
+            this.lblExitosoFiltro.Size = new System.Drawing.Size(73, 17);
             this.lblExitosoFiltro.TabIndex = 2;
             this.lblExitosoFiltro.Text = "Resultado:";
             // 
@@ -279,12 +280,14 @@ namespace pryErpChalimond
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.AcceptButton = this.btnFiltrar;
             this.ClientSize = new System.Drawing.Size(848, 607);
             this.Controls.Add(this.pnlFiltros);
             this.Controls.Add(this.btnRefrescar);
             this.Controls.Add(this.dgvAuditoria);
             this.Controls.Add(this.lblTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAuditoria";
             this.Text = "frmAuditoria";
             this.Load += new System.EventHandler(this.frmAuditoria_Load);
