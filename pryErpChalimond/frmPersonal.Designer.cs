@@ -627,7 +627,7 @@ namespace pryErpChalimond
             this.btnTabDatos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTabDatos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnTabDatos.ForeColor = System.Drawing.Color.White;
-            this.btnTabDatos.Location = new System.Drawing.Point(460, 20);
+            this.btnTabDatos.Location = new System.Drawing.Point(550, 20);
             this.btnTabDatos.Name = "btnTabDatos";
             this.btnTabDatos.Size = new System.Drawing.Size(160, 35);
             this.btnTabDatos.TabIndex = 6;
@@ -643,7 +643,7 @@ namespace pryErpChalimond
             this.btnTabContactos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTabContactos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnTabContactos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.btnTabContactos.Location = new System.Drawing.Point(630, 20);
+            this.btnTabContactos.Location = new System.Drawing.Point(716, 20);
             this.btnTabContactos.Name = "btnTabContactos";
             this.btnTabContactos.Size = new System.Drawing.Size(120, 35);
             this.btnTabContactos.TabIndex = 7;

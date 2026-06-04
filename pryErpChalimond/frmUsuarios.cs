@@ -26,6 +26,7 @@ namespace pryErpChalimond
             CargarPersonalCombo();
             CargarPerfilesCombo();
             CargarUsuariosGrilla();
+            EstilizarControles();
             LimpiarEdicion();
 
             if (preselectedPersonalId != -1)
@@ -111,6 +112,50 @@ namespace pryErpChalimond
             }
         }
 
+        private void ConfigurarEstadoControles(bool editando, bool nuevo)
+        {
+            bool activo = editando || nuevo;
+            
+            txtUsuarioSel.ReadOnly = editando || !activo;
+            txtContrasena.Enabled = activo;
+            cmbPerfil.Enabled = activo;
+            cmbPersonalAsociar.Enabled = activo;
+            
+            if (txtUsuarioSel.Text.Equals("admin", StringComparison.OrdinalIgnoreCase))
+            {
+                chkActivo.Enabled = false;
+            }
+            else
+            {
+                chkActivo.Enabled = activo;
+            }
+            
+            btnGuardar.Enabled = activo;
+            btnLimpiar.Enabled = true; // Cancelar/Limpiar está siempre disponible para vaciar o salir de un modo
+            
+            if (nuevo)
+            {
+                lblTituloEditar.Text = "Crear Nuevo Usuario";
+                btnGuardar.Text = "Crear Usuario";
+                btnGuardar.BackColor = System.Drawing.Color.FromArgb(16, 185, 129); // Emerald-500
+                btnLimpiar.Text = "Cancelar";
+            }
+            else if (editando)
+            {
+                lblTituloEditar.Text = "Modificar Usuario";
+                btnGuardar.Text = "Guardar Cambios";
+                btnGuardar.BackColor = System.Drawing.Color.FromArgb(79, 70, 229); // Indigo-600
+                btnLimpiar.Text = "Cancelar";
+            }
+            else
+            {
+                lblTituloEditar.Text = "Seleccione un usuario";
+                btnGuardar.Text = "Guardar Cambios";
+                btnGuardar.BackColor = System.Drawing.Color.FromArgb(71, 85, 105); // Slate-500
+                btnLimpiar.Text = "Limpiar";
+            }
+        }
+
         private void dgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -118,10 +163,7 @@ namespace pryErpChalimond
             try
             {
                 isNewMode = false;
-                txtUsuarioSel.ReadOnly = true;
                 txtContrasena.Clear(); // Vacío en edición por defecto
-                lblTituloEditar.Text = "Modificar Usuario";
-                btnGuardar.Text = "Guardar Cambios";
 
                 DataGridViewRow row = dgvUsuarios.Rows[e.RowIndex];
                 selectedIdUsuario = Convert.ToInt32(row.Cells["IdUsuario"].Value);
@@ -149,15 +191,7 @@ namespace pryErpChalimond
                 object activoVal = row.Cells["Activo"].Value;
                 chkActivo.Checked = activoVal != DBNull.Value && Convert.ToBoolean(activoVal);
 
-                // Impedir la desactivación de la cuenta administrador principal 'admin'
-                if (txtUsuarioSel.Text.Equals("admin", StringComparison.OrdinalIgnoreCase))
-                {
-                    chkActivo.Enabled = false;
-                }
-                else
-                {
-                    chkActivo.Enabled = true;
-                }
+                ConfigurarEstadoControles(true, false);
             }
             catch (Exception ex)
             {
@@ -337,7 +371,6 @@ namespace pryErpChalimond
             selectedIdUsuario = -1;
             isNewMode = false;
             txtUsuarioSel.Clear();
-            txtUsuarioSel.ReadOnly = true;
             txtContrasena.Clear();
             if (cmbPerfil.Items.Count > 0)
             {
@@ -352,14 +385,12 @@ namespace pryErpChalimond
                 }
             }
             chkActivo.Checked = true; // Activo por defecto
-            chkActivo.Enabled = true;
-            lblTituloEditar.Text = "Modificar Usuario";
-            btnGuardar.Text = "Guardar Cambios";
             if (cmbPersonalAsociar.Items.Count > 0)
             {
                 cmbPersonalAsociar.SelectedIndex = 0;
             }
             dgvUsuarios.ClearSelection();
+            ConfigurarEstadoControles(false, false);
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -367,7 +398,6 @@ namespace pryErpChalimond
             selectedIdUsuario = -1;
             isNewMode = true;
             txtUsuarioSel.Clear();
-            txtUsuarioSel.ReadOnly = false;
             txtContrasena.Clear();
             if (cmbPerfil.Items.Count > 0)
             {
@@ -382,14 +412,12 @@ namespace pryErpChalimond
                 }
             }
             chkActivo.Checked = true; // Activo por defecto
-            chkActivo.Enabled = true;
-            lblTituloEditar.Text = "Crear Nuevo Usuario";
-            btnGuardar.Text = "Crear Usuario";
             dgvUsuarios.ClearSelection();
             if (cmbPersonalAsociar.Items.Count > 0)
             {
                 cmbPersonalAsociar.SelectedIndex = 0;
             }
+            ConfigurarEstadoControles(false, true);
             txtUsuarioSel.Focus();
         }
 
@@ -427,7 +455,6 @@ namespace pryErpChalimond
                         .Replace("ó", "o")
                         .Replace("ú", "u")
                         .Replace("ñ", "n");
-
                     txtUsuarioSel.Text = sugerenciaUsuario;
                     txtContrasena.Text = dni; // Contraseña por defecto es el DNI
                 }
@@ -436,6 +463,116 @@ namespace pryErpChalimond
             {
                 Console.WriteLine("Error al auto-completar datos: " + ex.Message);
             }
+        }
+
+        private void EstilizarControles()
+        {
+            var fontLabel = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            var fontInput = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular);
+            var fontTitulo = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+
+            lblTitulo.Font = fontTitulo;
+            lblTitulo.ForeColor = System.Drawing.Color.FromArgb(248, 250, 252);
+
+            lblTituloEditar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            lblTituloEditar.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);
+
+            foreach (Control c in pnlEditar.Controls)
+            {
+                if (c is Label lbl)
+                {
+                    if (lbl != lblTituloEditar)
+                    {
+                        lbl.Font = fontLabel;
+                        lbl.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
+                    }
+                }
+                else if (c is TextBox txt)
+                {
+                    txt.Font = fontInput;
+                    txt.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+                    txt.ForeColor = System.Drawing.Color.White;
+                    txt.BorderStyle = BorderStyle.FixedSingle;
+                }
+                else if (c is ComboBox cmb)
+                {
+                    cmb.Font = fontInput;
+                    cmb.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+                    cmb.ForeColor = System.Drawing.Color.White;
+                    cmb.FlatStyle = FlatStyle.Flat;
+                }
+            }
+
+            EstilizarBoton(btnGuardar, System.Drawing.Color.FromArgb(79, 70, 229));
+            EstilizarBoton(btnLimpiar, System.Drawing.Color.FromArgb(71, 85, 105));
+            EstilizarBoton(btnNuevo, System.Drawing.Color.FromArgb(16, 185, 129));
+
+            EstilizarGrilla(dgvUsuarios);
+        }
+
+        private void EstilizarBoton(Button btn, System.Drawing.Color baseColor)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            btn.ForeColor = System.Drawing.Color.White;
+            btn.BackColor = baseColor;
+            btn.Cursor = Cursors.Hand;
+
+            btn.MouseEnter += (s, e) => {
+                if (btn.Enabled)
+                {
+                    btn.BackColor = AclararColor(btn.BackColor, 20);
+                }
+            };
+            btn.MouseLeave += (s, e) => {
+                if (btn == btnGuardar)
+                {
+                    if (!btn.Enabled)
+                    {
+                        btn.BackColor = System.Drawing.Color.FromArgb(71, 85, 105);
+                    }
+                    else
+                    {
+                        btn.BackColor = isNewMode ? System.Drawing.Color.FromArgb(16, 185, 129) : System.Drawing.Color.FromArgb(79, 70, 229);
+                    }
+                }
+                else
+                {
+                    btn.BackColor = btn.Enabled ? baseColor : System.Drawing.Color.FromArgb(71, 85, 105);
+                }
+            };
+        }
+
+        private void EstilizarGrilla(DataGridView dgv)
+        {
+            dgv.BackgroundColor = System.Drawing.Color.FromArgb(15, 23, 42);
+            dgv.GridColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgv.EnableHeadersVisualStyles = false;
+
+            dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);
+            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dgv.ColumnHeadersHeight = 38;
+
+            dgv.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(15, 23, 42);
+            dgv.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            dgv.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular);
+            dgv.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(79, 70, 229);
+            dgv.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            dgv.RowTemplate.Height = 36;
+        }
+
+        private System.Drawing.Color AclararColor(System.Drawing.Color color, int val)
+        {
+            int r = Math.Min(color.R + val, 255);
+            int g = Math.Min(color.G + val, 255);
+            int b = Math.Min(color.B + val, 255);
+            return System.Drawing.Color.FromArgb(r, g, b);
         }
     }
 }

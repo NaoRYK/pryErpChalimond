@@ -10,6 +10,7 @@ namespace pryErpChalimond
     {
         private int selectedIdPersonal = -1;
         private bool isUpdatingUI = false;
+        private Label lblContactosAviso;
 
         public frmPersonal()
         {
@@ -21,6 +22,20 @@ namespace pryErpChalimond
             CargarProvincias();
             CargarGrillaPersonal();
             CargarTiposContacto();
+
+            // Configurar aviso dinámico para contactos
+            lblContactosAviso = new Label();
+            lblContactosAviso.Text = "⚠️ Seleccione un empleado en la lista inferior para poder gestionar sus contactos y redes sociales.";
+            lblContactosAviso.ForeColor = System.Drawing.Color.FromArgb(248, 113, 113); // Light Red / Salmon
+            lblContactosAviso.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            lblContactosAviso.AutoSize = false;
+            lblContactosAviso.Size = new System.Drawing.Size(720, 50);
+            lblContactosAviso.Location = new System.Drawing.Point(20, 30);
+            lblContactosAviso.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblContactosAviso.Visible = false;
+            pnlContactoContainer.Controls.Add(lblContactosAviso);
+
+            EstilizarControles();
             LimpiarFormulario();
             SetTab(true);
 
@@ -514,6 +529,25 @@ namespace pryErpChalimond
                 cmbTipo.Enabled = false;
                 dgvContactos.DataSource = null;
 
+                // Actualizar aviso y visibilidad
+                if (lblContactosAviso != null)
+                {
+                    lblContactosAviso.Visible = true;
+                    lblTipo.Visible = false;
+                    cmbTipo.Visible = false;
+                    lblValor.Visible = false;
+                    txtValor.Visible = false;
+                    btnAgregarContacto.Visible = false;
+                    btnEliminarContacto.Visible = false;
+                    dgvContactos.Visible = false;
+                }
+
+                lblTitulo.Text = "Gestión de Personal: Registrar Nuevo";
+                btnGuardar.Text = "Registrar Personal";
+                btnGuardar.BackColor = System.Drawing.Color.FromArgb(34, 197, 94); // Emerald/Green-500
+                btnEliminar.Enabled = false;
+                btnEliminar.BackColor = System.Drawing.Color.FromArgb(71, 85, 105); // Slate-500 (deshabilitado)
+
                 CargarDireccionesAdicionales();
                 ActualizarBotonUsuario(-1);
                 return;
@@ -524,6 +558,32 @@ namespace pryErpChalimond
             btnEliminarContacto.Enabled = true;
             txtValor.Enabled = true;
             cmbTipo.Enabled = true;
+
+            // Actualizar aviso y visibilidad
+            if (lblContactosAviso != null)
+            {
+                lblContactosAviso.Visible = false;
+                lblTipo.Visible = true;
+                cmbTipo.Visible = true;
+                lblValor.Visible = true;
+                txtValor.Visible = true;
+                btnAgregarContacto.Visible = true;
+                btnEliminarContacto.Visible = true;
+                dgvContactos.Visible = true;
+            }
+
+            string personalNombre = "";
+            if (dgvPersonal.CurrentRow != null)
+            {
+                personalNombre = $"{dgvPersonal.CurrentRow.Cells["Apellido"].Value}, {dgvPersonal.CurrentRow.Cells["Nombre"].Value}";
+            }
+            lblTitulo.Text = string.IsNullOrEmpty(personalNombre) 
+                ? $"Gestión de Personal: Editar #{selectedIdPersonal}" 
+                : $"Gestión de Personal: {personalNombre}";
+            btnGuardar.Text = "Guardar Cambios";
+            btnGuardar.BackColor = System.Drawing.Color.FromArgb(79, 70, 229); // Indigo-600
+            btnEliminar.Enabled = true;
+            btnEliminar.BackColor = System.Drawing.Color.FromArgb(239, 68, 68); // Red-500
 
             try
             {
@@ -945,6 +1005,168 @@ namespace pryErpChalimond
             {
                 MessageBox.Show("Error al abrir gestión de usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void EstilizarControles()
+        {
+            var fontLabel = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            var fontInput = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular);
+            var fontTitulo = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+
+            lblTitulo.Font = fontTitulo;
+            lblTitulo.ForeColor = System.Drawing.Color.FromArgb(248, 250, 252);
+
+            foreach (Control c in pnlForm.Controls)
+            {
+                if (c is Label lbl)
+                {
+                    if (lbl != label1 && lbl != lblDireccionesAdicionales)
+                    {
+                        lbl.Font = fontLabel;
+                        lbl.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
+                    }
+                }
+                else if (c is TextBox txt)
+                {
+                    txt.Font = fontInput;
+                    txt.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+                    txt.ForeColor = System.Drawing.Color.White;
+                    txt.BorderStyle = BorderStyle.FixedSingle;
+                }
+                else if (c is ComboBox cmb)
+                {
+                    cmb.Font = fontInput;
+                    cmb.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+                    cmb.ForeColor = System.Drawing.Color.White;
+                    cmb.FlatStyle = FlatStyle.Flat;
+                }
+            }
+
+            foreach (Control c in pnlContactoContainer.Controls)
+            {
+                if (c is Label lbl)
+                {
+                    if (lbl != lblContactosAviso)
+                    {
+                        lbl.Font = fontLabel;
+                        lbl.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
+                    }
+                }
+                else if (c is TextBox txt)
+                {
+                    txt.Font = fontInput;
+                    txt.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+                    txt.ForeColor = System.Drawing.Color.White;
+                    txt.BorderStyle = BorderStyle.FixedSingle;
+                }
+                else if (c is ComboBox cmb)
+                {
+                    cmb.Font = fontInput;
+                    cmb.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+                    cmb.ForeColor = System.Drawing.Color.White;
+                    cmb.FlatStyle = FlatStyle.Flat;
+                }
+            }
+
+            txtDireccionAdicional.Font = fontInput;
+            txtDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            txtDireccionAdicional.ForeColor = System.Drawing.Color.White;
+            txtDireccionAdicional.BorderStyle = BorderStyle.FixedSingle;
+
+            lstDireccionesAdicionales.Font = fontInput;
+            lstDireccionesAdicionales.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            lstDireccionesAdicionales.ForeColor = System.Drawing.Color.White;
+            lstDireccionesAdicionales.BorderStyle = BorderStyle.FixedSingle;
+
+            EstilizarBoton(btnGuardar, System.Drawing.Color.FromArgb(34, 197, 94));
+            EstilizarBoton(btnLimpiar, System.Drawing.Color.FromArgb(71, 85, 105));
+            EstilizarBoton(btnEliminar, System.Drawing.Color.FromArgb(239, 68, 68));
+            EstilizarBoton(btnVerMapa, System.Drawing.Color.FromArgb(79, 70, 229));
+            EstilizarBoton(btnAgregarDireccionAdicional, System.Drawing.Color.FromArgb(16, 185, 129));
+            EstilizarBoton(btnEliminarDireccionAdicional, System.Drawing.Color.FromArgb(220, 38, 38));
+            EstilizarBoton(btnAgregarContacto, System.Drawing.Color.FromArgb(16, 185, 129));
+            EstilizarBoton(btnEliminarContacto, System.Drawing.Color.FromArgb(220, 38, 38));
+            EstilizarBoton(btnGestionarUsuario, System.Drawing.Color.FromArgb(79, 70, 229));
+
+            EstilizarBotonTab(btnTabDatos);
+            EstilizarBotonTab(btnTabContactos);
+
+            EstilizarGrilla(dgvPersonal);
+            EstilizarGrilla(dgvContactos);
+        }
+
+        private void EstilizarBoton(Button btn, System.Drawing.Color baseColor)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            btn.ForeColor = System.Drawing.Color.White;
+            btn.BackColor = baseColor;
+            btn.Cursor = Cursors.Hand;
+
+            btn.MouseEnter += (s, e) => {
+                if (btn.Enabled)
+                {
+                    btn.BackColor = AclararColor(btn.BackColor, 20);
+                }
+            };
+            btn.MouseLeave += (s, e) => {
+                if (btn == btnGuardar)
+                {
+                    btn.BackColor = selectedIdPersonal == -1 ? System.Drawing.Color.FromArgb(34, 197, 94) : System.Drawing.Color.FromArgb(79, 70, 229);
+                }
+                else if (btn == btnEliminar)
+                {
+                    btn.BackColor = selectedIdPersonal == -1 ? System.Drawing.Color.FromArgb(71, 85, 105) : System.Drawing.Color.FromArgb(239, 68, 68);
+                }
+                else if (btn == btnGestionarUsuario)
+                {
+                    ActualizarBotonUsuario(selectedIdPersonal);
+                }
+                else
+                {
+                    btn.BackColor = btn.Enabled ? baseColor : System.Drawing.Color.FromArgb(71, 85, 105);
+                }
+            };
+        }
+
+        private void EstilizarBotonTab(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            btn.Cursor = Cursors.Hand;
+        }
+
+        private void EstilizarGrilla(DataGridView dgv)
+        {
+            dgv.BackgroundColor = System.Drawing.Color.FromArgb(15, 23, 42);
+            dgv.GridColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgv.EnableHeadersVisualStyles = false;
+
+            dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(241, 245, 249);
+            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            dgv.ColumnHeadersHeight = 38;
+
+            dgv.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(15, 23, 42);
+            dgv.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            dgv.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular);
+            dgv.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(79, 70, 229);
+            dgv.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            dgv.RowTemplate.Height = 36;
+        }
+
+        private System.Drawing.Color AclararColor(System.Drawing.Color color, int val)
+        {
+            int r = Math.Min(color.R + val, 255);
+            int g = Math.Min(color.G + val, 255);
+            int b = Math.Min(color.B + val, 255);
+            return System.Drawing.Color.FromArgb(r, g, b);
         }
     }
 }
