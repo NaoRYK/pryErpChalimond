@@ -32,6 +32,12 @@ namespace pryErpChalimond
                 btnUsuarios.Visible = false;
             }
 
+            // Restringir acceso a Personal si el rol es Usuario (solo Admin y Recursos Humanos tienen acceso)
+            if (loggedRol.Equals("Usuario", StringComparison.OrdinalIgnoreCase))
+            {
+                btnPersonal.Visible = false;
+            }
+
             // Cargar dashboard por defecto
             AbrirFormularioHijo(new frmDashboard());
             DestacarBotonActivo(btnInicio);
@@ -85,6 +91,11 @@ namespace pryErpChalimond
 
         private void btnPersonal_Click(object sender, EventArgs e)
         {
+            if (loggedRol.Equals("Usuario", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Acceso denegado: Su rol no tiene acceso al módulo de personal.", "Acceso Restringido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             DestacarBotonActivo(btnPersonal);
             AbrirFormularioHijo(new frmPersonal());
         }
@@ -109,6 +120,17 @@ namespace pryErpChalimond
             }
             DestacarBotonActivo(btnUsuarios);
             AbrirFormularioHijo(new frmUsuarios());
+        }
+
+        public void AbrirUsuariosConPersonal(int idPersonal)
+        {
+            if (!loggedRol.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Acceso denegado: Esta pantalla solo está disponible para administradores.", "Acceso Restringido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            DestacarBotonActivo(btnUsuarios);
+            AbrirFormularioHijo(new frmUsuarios(idPersonal));
         }
 
         private void btnSalirMain_Click(object sender, EventArgs e)

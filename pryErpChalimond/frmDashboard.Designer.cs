@@ -53,9 +53,10 @@ namespace pryErpChalimond
             this.lblWelcomeSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
             this.lblWelcomeSub.Location = new System.Drawing.Point(44, 90);
             this.lblWelcomeSub.Name = "lblWelcomeSub";
-            this.lblWelcomeSub.Size = new System.Drawing.Size(367, 21);
+            this.lblWelcomeSub.Size = new System.Drawing.Size(228, 21);
             this.lblWelcomeSub.TabIndex = 1;
-            this.lblWelcomeSub.Text = "Resumen de estado de base de datos de Chalimond";
+            this.lblWelcomeSub.Text = "Resumen de estado del sistema";
+            this.lblWelcomeSub.Click += new System.EventHandler(this.lblWelcomeSub_Click);
             // 
             // pnlStatPersonal
             // 

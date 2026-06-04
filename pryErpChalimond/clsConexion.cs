@@ -258,9 +258,25 @@ namespace pryErpChalimond
                         IdPerfil INT NOT NULL,
                         IdPersonal INT,
                         IntentosFallidos INT DEFAULT 0,
-                        LoginCount INT DEFAULT 0
+                        LoginCount INT DEFAULT 0,
+                        Activo YESNO DEFAULT YES
                     )";
                     EjecutarComando(conn, sql);
+                }
+                else
+                {
+                    if (!ExisteColumna(conn, "Usuarios", "Activo"))
+                    {
+                        try
+                        {
+                            EjecutarComando(conn, "ALTER TABLE Usuarios ADD COLUMN Activo YESNO DEFAULT YES");
+                            EjecutarComando(conn, "UPDATE Usuarios SET Activo = YES");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error al agregar columna Activo a Usuarios: " + ex.Message);
+                        }
+                    }
                 }
 
                 // Crear tabla AuditoriaSesion
@@ -337,6 +353,13 @@ namespace pryErpChalimond
             {
                 EjecutarComando(conn, "INSERT INTO Perfiles (NombrePerfil) VALUES ('Admin')");
                 EjecutarComando(conn, "INSERT INTO Perfiles (NombrePerfil) VALUES ('Usuario')");
+            }
+
+            // Asegurarse de que exista el perfil de Recursos Humanos
+            long cantRH = ObtenerConteo(conn, "SELECT COUNT(*) FROM Perfiles WHERE NombrePerfil = 'Recursos Humanos'");
+            if (cantRH == 0)
+            {
+                EjecutarComando(conn, "INSERT INTO Perfiles (NombrePerfil) VALUES ('Recursos Humanos')");
             }
 
             // 2. Semillar Provincias

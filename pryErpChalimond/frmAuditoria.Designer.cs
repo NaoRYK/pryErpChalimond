@@ -221,7 +221,7 @@ namespace pryErpChalimond
             this.chkFechaFiltro.AutoSize = true;
             this.chkFechaFiltro.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.chkFechaFiltro.ForeColor = System.Drawing.Color.White;
-            this.chkFechaFiltro.Location = new System.Drawing.Point(290, 15);
+            this.chkFechaFiltro.Location = new System.Drawing.Point(413, 11);
             this.chkFechaFiltro.Name = "chkFechaFiltro";
             this.chkFechaFiltro.Size = new System.Drawing.Size(126, 21);
             this.chkFechaFiltro.TabIndex = 4;
@@ -277,10 +277,10 @@ namespace pryErpChalimond
             // 
             // frmAuditoria
             // 
+            this.AcceptButton = this.btnFiltrar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.AcceptButton = this.btnFiltrar;
             this.ClientSize = new System.Drawing.Size(848, 607);
             this.Controls.Add(this.pnlFiltros);
             this.Controls.Add(this.btnRefrescar);

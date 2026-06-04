@@ -31,7 +31,7 @@ namespace pryErpChalimond
             {
                 // Buscar el usuario y obtener su contraseña, perfil, estado de personal y contadores
                 string sql = @"
-                    SELECT U.IdUsuario, U.Contrasena, U.IntentosFallidos, U.LoginCount, P.NombrePerfil, PE.Activo, U.IdPersonal
+                    SELECT U.IdUsuario, U.Contrasena, U.IntentosFallidos, U.LoginCount, P.NombrePerfil, PE.Activo AS PersonalActivo, U.IdPersonal, U.Activo AS UsuarioActivo
                     FROM (Usuarios U
                     INNER JOIN Perfiles P ON U.IdPerfil = P.IdPerfil)
                     LEFT JOIN Personal PE ON U.IdPersonal = PE.IdPersonal
@@ -51,8 +51,22 @@ namespace pryErpChalimond
                     int idUsuario = Convert.ToInt32(row["IdUsuario"]);
                     int loginCount = Convert.ToInt32(row["LoginCount"]);
                     
+                    // Verificar si la cuenta de usuario está activa
+                    bool esUsuarioActivo = true;
+                    if (dt.Columns.Contains("UsuarioActivo") && row["UsuarioActivo"] != DBNull.Value)
+                    {
+                        esUsuarioActivo = Convert.ToBoolean(row["UsuarioActivo"]);
+                    }
+
+                    if (!esUsuarioActivo)
+                    {
+                        RegistrarAuditoria(usuario, false, "Intento de inicio de sesión con cuenta desactivada.");
+                        lblError.Text = "Acceso denegado: Esta cuenta de usuario está desactivada.";
+                        return;
+                    }
+
                     // Verificar si tiene personal asociado y si este está inactivo
-                    object activoObj = row["Activo"];
+                    object activoObj = row["PersonalActivo"];
                     bool tienePersonal = row["IdPersonal"] != DBNull.Value;
                     bool esPersonalActivo = true;
                     if (tienePersonal && activoObj != DBNull.Value)
@@ -152,21 +166,7 @@ namespace pryErpChalimond
             Application.Exit();
         }
 
-        private void lblRegistrarse_Click(object sender, EventArgs e)
-        {
-            frmRegister registerForm = new frmRegister();
-            registerForm.ShowDialog();
-        }
 
-        private void lblRegistrarse_MouseEnter(object sender, EventArgs e)
-        {
-            lblRegistrarse.ForeColor = Color.FromArgb(165, 180, 252);
-        }
-
-        private void lblRegistrarse_MouseLeave(object sender, EventArgs e)
-        {
-            lblRegistrarse.ForeColor = Color.FromArgb(129, 140, 248);
-        }
 
         private void txtUsuario_Enter(object sender, EventArgs e)
         {

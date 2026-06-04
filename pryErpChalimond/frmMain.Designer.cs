@@ -170,7 +170,7 @@ namespace pryErpChalimond
             this.lblBrandSubtitle.Name = "lblBrandSubtitle";
             this.lblBrandSubtitle.Size = new System.Drawing.Size(116, 13);
             this.lblBrandSubtitle.TabIndex = 1;
-            this.lblBrandSubtitle.Text = "ERP BASE MODULAR";
+            this.lblBrandSubtitle.Text = "Por Cesar Chalimond";
             // 
             // lblBrandTitle
             // 
@@ -179,9 +179,9 @@ namespace pryErpChalimond
             this.lblBrandTitle.ForeColor = System.Drawing.Color.White;
             this.lblBrandTitle.Location = new System.Drawing.Point(20, 18);
             this.lblBrandTitle.Name = "lblBrandTitle";
-            this.lblBrandTitle.Size = new System.Drawing.Size(108, 25);
+            this.lblBrandTitle.Size = new System.Drawing.Size(119, 25);
             this.lblBrandTitle.TabIndex = 0;
-            this.lblBrandTitle.Text = "Chalimond";
+            this.lblBrandTitle.Text = "Sistema ERP";
             // 
             // pnlStatus
             // 

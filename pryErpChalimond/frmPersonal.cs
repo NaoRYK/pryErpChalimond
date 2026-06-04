@@ -23,6 +23,12 @@ namespace pryErpChalimond
             CargarTiposContacto();
             LimpiarFormulario();
             SetTab(true);
+
+            // Ocultar gestión de usuario para roles no administradores
+            if (!clsSesion.Rol.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                btnGestionarUsuario.Visible = false;
+            }
         }
 
         private void CargarProvincias()
@@ -509,6 +515,7 @@ namespace pryErpChalimond
                 dgvContactos.DataSource = null;
 
                 CargarDireccionesAdicionales();
+                ActualizarBotonUsuario(-1);
                 return;
             }
 
@@ -539,6 +546,9 @@ namespace pryErpChalimond
 
                 // 3. Cargar direcciones adicionales
                 CargarDireccionesAdicionales();
+
+                // 4. Actualizar botón de usuario
+                ActualizarBotonUsuario(selectedIdPersonal);
             }
             catch (Exception ex)
             {
@@ -879,6 +889,61 @@ namespace pryErpChalimond
                 {
                     MessageBox.Show("Error al eliminar dirección adicional: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void ActualizarBotonUsuario(int idPersonal)
+        {
+            if (idPersonal == -1)
+            {
+                btnGestionarUsuario.Enabled = false;
+                btnGestionarUsuario.Text = "Gestionar Usuario";
+                btnGestionarUsuario.BackColor = System.Drawing.Color.FromArgb(71, 85, 105);
+                return;
+            }
+
+            try
+            {
+                string sql = "SELECT COUNT(*) FROM Usuarios WHERE IdPersonal = ?";
+                long count = Convert.ToInt64(clsConexion.EjecutarEscalar(sql, new OleDbParameter[] { new OleDbParameter("?", idPersonal) }));
+
+                btnGestionarUsuario.Enabled = true;
+                if (count > 0)
+                {
+                    btnGestionarUsuario.Text = "Editar Cuenta de Usuario";
+                    btnGestionarUsuario.BackColor = System.Drawing.Color.FromArgb(79, 70, 229);
+                }
+                else
+                {
+                    btnGestionarUsuario.Text = "Crear Cuenta de Usuario";
+                    btnGestionarUsuario.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al verificar cuenta de usuario: " + ex.Message);
+            }
+        }
+
+        private void btnGestionarUsuario_Click(object sender, EventArgs e)
+        {
+            if (selectedIdPersonal == -1) return;
+
+            try
+            {
+                frmMain mainForm = Application.OpenForms["frmMain"] as frmMain;
+                if (mainForm != null)
+                {
+                    mainForm.AbrirUsuariosConPersonal(selectedIdPersonal);
+                }
+                else
+                {
+                    MessageBox.Show("Error de navegación: No se pudo encontrar el formulario principal.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir gestión de usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -37,5 +37,10 @@ namespace pryErpChalimond
                 Console.WriteLine("Error al cargar estadísticas en dashboard: " + ex.Message);
             }
         }
+
+        private void lblWelcomeSub_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

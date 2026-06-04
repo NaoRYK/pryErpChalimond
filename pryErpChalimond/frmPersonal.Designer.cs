@@ -23,6 +23,7 @@ namespace pryErpChalimond
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPersonal));
             this.lblTitulo = new System.Windows.Forms.Label();
             this.pnlForm = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnVerMapa = new System.Windows.Forms.Button();
             this.txtUbicacionGeografica = new System.Windows.Forms.TextBox();
             this.lblUbicacionGeografica = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@ namespace pryErpChalimond
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
+            this.btnGestionarUsuario = new System.Windows.Forms.Button();
             this.dgvPersonal = new System.Windows.Forms.DataGridView();
             this.pnlDatosContainer = new System.Windows.Forms.Panel();
             this.pnlContactoContainer = new System.Windows.Forms.Panel();
@@ -55,8 +57,8 @@ namespace pryErpChalimond
             this.txtValor = new System.Windows.Forms.TextBox();
             this.btnAgregarContacto = new System.Windows.Forms.Button();
             this.btnEliminarContacto = new System.Windows.Forms.Button();
-            this.chkActivo = new System.Windows.Forms.CheckBox();
             this.dgvContactos = new System.Windows.Forms.DataGridView();
+            this.chkActivo = new System.Windows.Forms.CheckBox();
             this.btnTabDatos = new System.Windows.Forms.Button();
             this.btnTabContactos = new System.Windows.Forms.Button();
             this.pnlForm.SuspendLayout();
@@ -80,6 +82,7 @@ namespace pryErpChalimond
             // pnlForm
             // 
             this.pnlForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.pnlForm.Controls.Add(this.label1);
             this.pnlForm.Controls.Add(this.btnVerMapa);
             this.pnlForm.Controls.Add(this.txtUbicacionGeografica);
             this.pnlForm.Controls.Add(this.lblUbicacionGeografica);
@@ -105,72 +108,16 @@ namespace pryErpChalimond
             this.pnlForm.Size = new System.Drawing.Size(760, 285);
             this.pnlForm.TabIndex = 1;
             // 
-            // lblDireccionesAdicionales
+            // label1
             // 
-            this.lblDireccionesAdicionales.AutoSize = true;
-            this.lblDireccionesAdicionales.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDireccionesAdicionales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.lblDireccionesAdicionales.Location = new System.Drawing.Point(17, 200);
-            this.lblDireccionesAdicionales.Name = "lblDireccionesAdicionales";
-            this.lblDireccionesAdicionales.Size = new System.Drawing.Size(135, 15);
-            this.lblDireccionesAdicionales.TabIndex = 17;
-            this.lblDireccionesAdicionales.Text = "Direcciones Adicionales";
-            // 
-            // lstDireccionesAdicionales
-            // 
-            this.lstDireccionesAdicionales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lstDireccionesAdicionales.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lstDireccionesAdicionales.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.lstDireccionesAdicionales.ForeColor = System.Drawing.Color.White;
-            this.lstDireccionesAdicionales.FormattingEnabled = true;
-            this.lstDireccionesAdicionales.ItemHeight = 17;
-            this.lstDireccionesAdicionales.Location = new System.Drawing.Point(20, 220);
-            this.lstDireccionesAdicionales.Name = "lstDireccionesAdicionales";
-            this.lstDireccionesAdicionales.Size = new System.Drawing.Size(400, 53);
-            this.lstDireccionesAdicionales.TabIndex = 18;
-            // 
-            // txtDireccionAdicional
-            // 
-            this.txtDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.txtDireccionAdicional.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtDireccionAdicional.ForeColor = System.Drawing.Color.White;
-            this.txtDireccionAdicional.Location = new System.Drawing.Point(430, 220);
-            this.txtDireccionAdicional.Name = "txtDireccionAdicional";
-            this.txtDireccionAdicional.Size = new System.Drawing.Size(200, 25);
-            this.txtDireccionAdicional.TabIndex = 19;
-            // 
-            // btnAgregarDireccionAdicional
-            // 
-            this.btnAgregarDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
-            this.btnAgregarDireccionAdicional.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAgregarDireccionAdicional.FlatAppearance.BorderSize = 0;
-            this.btnAgregarDireccionAdicional.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAgregarDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnAgregarDireccionAdicional.ForeColor = System.Drawing.Color.White;
-            this.btnAgregarDireccionAdicional.Location = new System.Drawing.Point(640, 219);
-            this.btnAgregarDireccionAdicional.Name = "btnAgregarDireccionAdicional";
-            this.btnAgregarDireccionAdicional.Size = new System.Drawing.Size(50, 27);
-            this.btnAgregarDireccionAdicional.TabIndex = 20;
-            this.btnAgregarDireccionAdicional.Text = "Agregar";
-            this.btnAgregarDireccionAdicional.UseVisualStyleBackColor = false;
-            this.btnAgregarDireccionAdicional.Click += new System.EventHandler(this.btnAgregarDireccionAdicional_Click);
-            // 
-            // btnEliminarDireccionAdicional
-            // 
-            this.btnEliminarDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.btnEliminarDireccionAdicional.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEliminarDireccionAdicional.FlatAppearance.BorderSize = 0;
-            this.btnEliminarDireccionAdicional.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEliminarDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnEliminarDireccionAdicional.ForeColor = System.Drawing.Color.White;
-            this.btnEliminarDireccionAdicional.Location = new System.Drawing.Point(695, 219);
-            this.btnEliminarDireccionAdicional.Name = "btnEliminarDireccionAdicional";
-            this.btnEliminarDireccionAdicional.Size = new System.Drawing.Size(45, 27);
-            this.btnEliminarDireccionAdicional.TabIndex = 21;
-            this.btnEliminarDireccionAdicional.Text = "Borrar";
-            this.btnEliminarDireccionAdicional.UseVisualStyleBackColor = false;
-            this.btnEliminarDireccionAdicional.Click += new System.EventHandler(this.btnEliminarDireccionAdicional_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.label1.Location = new System.Drawing.Point(23, 200);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(157, 15);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Agregar direccion adicional";
             // 
             // btnVerMapa
             // 
@@ -347,6 +294,73 @@ namespace pryErpChalimond
             this.lblDni.TabIndex = 0;
             this.lblDni.Text = "DNI";
             // 
+            // lblDireccionesAdicionales
+            // 
+            this.lblDireccionesAdicionales.AutoSize = true;
+            this.lblDireccionesAdicionales.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblDireccionesAdicionales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.lblDireccionesAdicionales.Location = new System.Drawing.Point(237, 200);
+            this.lblDireccionesAdicionales.Name = "lblDireccionesAdicionales";
+            this.lblDireccionesAdicionales.Size = new System.Drawing.Size(178, 15);
+            this.lblDireccionesAdicionales.TabIndex = 17;
+            this.lblDireccionesAdicionales.Text = "Lista de direcciones adicionales";
+            // 
+            // lstDireccionesAdicionales
+            // 
+            this.lstDireccionesAdicionales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lstDireccionesAdicionales.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstDireccionesAdicionales.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.lstDireccionesAdicionales.ForeColor = System.Drawing.Color.White;
+            this.lstDireccionesAdicionales.FormattingEnabled = true;
+            this.lstDireccionesAdicionales.ItemHeight = 17;
+            this.lstDireccionesAdicionales.Location = new System.Drawing.Point(240, 218);
+            this.lstDireccionesAdicionales.Name = "lstDireccionesAdicionales";
+            this.lstDireccionesAdicionales.Size = new System.Drawing.Size(400, 53);
+            this.lstDireccionesAdicionales.TabIndex = 18;
+            // 
+            // txtDireccionAdicional
+            // 
+            this.txtDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.txtDireccionAdicional.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtDireccionAdicional.ForeColor = System.Drawing.Color.White;
+            this.txtDireccionAdicional.Location = new System.Drawing.Point(20, 218);
+            this.txtDireccionAdicional.Name = "txtDireccionAdicional";
+            this.txtDireccionAdicional.Size = new System.Drawing.Size(200, 25);
+            this.txtDireccionAdicional.TabIndex = 19;
+            // 
+            // btnAgregarDireccionAdicional
+            // 
+            this.btnAgregarDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
+            this.btnAgregarDireccionAdicional.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAgregarDireccionAdicional.FlatAppearance.BorderSize = 0;
+            this.btnAgregarDireccionAdicional.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregarDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnAgregarDireccionAdicional.ForeColor = System.Drawing.Color.White;
+            this.btnAgregarDireccionAdicional.Location = new System.Drawing.Point(20, 249);
+            this.btnAgregarDireccionAdicional.Name = "btnAgregarDireccionAdicional";
+            this.btnAgregarDireccionAdicional.Size = new System.Drawing.Size(98, 27);
+            this.btnAgregarDireccionAdicional.TabIndex = 20;
+            this.btnAgregarDireccionAdicional.Text = "Agregar";
+            this.btnAgregarDireccionAdicional.UseVisualStyleBackColor = false;
+            this.btnAgregarDireccionAdicional.Click += new System.EventHandler(this.btnAgregarDireccionAdicional_Click);
+            // 
+            // btnEliminarDireccionAdicional
+            // 
+            this.btnEliminarDireccionAdicional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.btnEliminarDireccionAdicional.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEliminarDireccionAdicional.FlatAppearance.BorderSize = 0;
+            this.btnEliminarDireccionAdicional.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminarDireccionAdicional.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnEliminarDireccionAdicional.ForeColor = System.Drawing.Color.White;
+            this.btnEliminarDireccionAdicional.Location = new System.Drawing.Point(125, 249);
+            this.btnEliminarDireccionAdicional.Name = "btnEliminarDireccionAdicional";
+            this.btnEliminarDireccionAdicional.Size = new System.Drawing.Size(95, 27);
+            this.btnEliminarDireccionAdicional.TabIndex = 21;
+            this.btnEliminarDireccionAdicional.Text = "Borrar";
+            this.btnEliminarDireccionAdicional.UseVisualStyleBackColor = false;
+            this.btnEliminarDireccionAdicional.Click += new System.EventHandler(this.btnEliminarDireccionAdicional_Click);
+            // 
             // btnGuardar
             // 
             this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
@@ -394,6 +408,22 @@ namespace pryErpChalimond
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
+            // btnGestionarUsuario
+            // 
+            this.btnGestionarUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnGestionarUsuario.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGestionarUsuario.FlatAppearance.BorderSize = 0;
+            this.btnGestionarUsuario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGestionarUsuario.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnGestionarUsuario.ForeColor = System.Drawing.Color.White;
+            this.btnGestionarUsuario.Location = new System.Drawing.Point(300, 295);
+            this.btnGestionarUsuario.Name = "btnGestionarUsuario";
+            this.btnGestionarUsuario.Size = new System.Drawing.Size(200, 35);
+            this.btnGestionarUsuario.TabIndex = 23;
+            this.btnGestionarUsuario.Text = "Crear Cuenta de Usuario";
+            this.btnGestionarUsuario.UseVisualStyleBackColor = false;
+            this.btnGestionarUsuario.Click += new System.EventHandler(this.btnGestionarUsuario_Click);
             // 
             // dgvPersonal
             // 
@@ -454,6 +484,7 @@ namespace pryErpChalimond
             this.pnlDatosContainer.Controls.Add(this.btnGuardar);
             this.pnlDatosContainer.Controls.Add(this.btnLimpiar);
             this.pnlDatosContainer.Controls.Add(this.btnEliminar);
+            this.pnlDatosContainer.Controls.Add(this.btnGestionarUsuario);
             this.pnlDatosContainer.Location = new System.Drawing.Point(40, 75);
             this.pnlDatosContainer.Name = "pnlDatosContainer";
             this.pnlDatosContainer.Size = new System.Drawing.Size(760, 335);
@@ -581,6 +612,13 @@ namespace pryErpChalimond
             this.dgvContactos.Size = new System.Drawing.Size(720, 245);
             this.dgvContactos.TabIndex = 7;
             // 
+            // chkActivo
+            // 
+            this.chkActivo.Location = new System.Drawing.Point(0, 0);
+            this.chkActivo.Name = "chkActivo";
+            this.chkActivo.Size = new System.Drawing.Size(104, 24);
+            this.chkActivo.TabIndex = 9;
+            // 
             // btnTabDatos
             // 
             this.btnTabDatos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
@@ -615,10 +653,10 @@ namespace pryErpChalimond
             // 
             // frmPersonal
             // 
+            this.AcceptButton = this.btnGuardar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.AcceptButton = this.btnGuardar;
             this.ClientSize = new System.Drawing.Size(848, 640);
             this.Controls.Add(this.dgvPersonal);
             this.Controls.Add(this.pnlDatosContainer);
@@ -684,5 +722,7 @@ namespace pryErpChalimond
         private System.Windows.Forms.TextBox txtDireccionAdicional;
         private System.Windows.Forms.Button btnAgregarDireccionAdicional;
         private System.Windows.Forms.Button btnEliminarDireccionAdicional;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnGestionarUsuario;
     }
 }

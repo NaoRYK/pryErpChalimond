@@ -20,8 +20,6 @@ namespace pryErpChalimond
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.pnlBackground = new System.Windows.Forms.Panel();
             this.pnlCard = new System.Windows.Forms.Panel();
-            this.lblRegistrarse = new System.Windows.Forms.Label();
-            this.lblNoCuenta = new System.Windows.Forms.Label();
             this.lblError = new System.Windows.Forms.Label();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
@@ -51,8 +49,6 @@ namespace pryErpChalimond
             // pnlCard
             // 
             this.pnlCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.pnlCard.Controls.Add(this.lblRegistrarse);
-            this.pnlCard.Controls.Add(this.lblNoCuenta);
             this.pnlCard.Controls.Add(this.lblError);
             this.pnlCard.Controls.Add(this.btnSalir);
             this.pnlCard.Controls.Add(this.btnLogin);
@@ -68,32 +64,6 @@ namespace pryErpChalimond
             this.pnlCard.Name = "pnlCard";
             this.pnlCard.Size = new System.Drawing.Size(384, 441);
             this.pnlCard.TabIndex = 0;
-            // 
-            // lblRegistrarse
-            // 
-            this.lblRegistrarse.AutoSize = true;
-            this.lblRegistrarse.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblRegistrarse.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.lblRegistrarse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(140)))), ((int)(((byte)(248)))));
-            this.lblRegistrarse.Location = new System.Drawing.Point(220, 395);
-            this.lblRegistrarse.Name = "lblRegistrarse";
-            this.lblRegistrarse.Size = new System.Drawing.Size(70, 17);
-            this.lblRegistrarse.TabIndex = 12;
-            this.lblRegistrarse.Text = "Regístrate";
-            this.lblRegistrarse.Click += new System.EventHandler(this.lblRegistrarse_Click);
-            this.lblRegistrarse.MouseEnter += new System.EventHandler(this.lblRegistrarse_MouseEnter);
-            this.lblRegistrarse.MouseLeave += new System.EventHandler(this.lblRegistrarse_MouseLeave);
-            // 
-            // lblNoCuenta
-            // 
-            this.lblNoCuenta.AutoSize = true;
-            this.lblNoCuenta.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.lblNoCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.lblNoCuenta.Location = new System.Drawing.Point(83, 395);
-            this.lblNoCuenta.Name = "lblNoCuenta";
-            this.lblNoCuenta.Size = new System.Drawing.Size(143, 17);
-            this.lblNoCuenta.TabIndex = 11;
-            this.lblNoCuenta.Text = "¿No tienes una cuenta?";
             // 
             // lblError
             // 
@@ -133,7 +103,7 @@ namespace pryErpChalimond
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnLogin.ForeColor = System.Drawing.Color.White;
-            this.btnLogin.Location = new System.Drawing.Point(25, 308);
+            this.btnLogin.Location = new System.Drawing.Point(25, 313);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(334, 40);
             this.btnLogin.TabIndex = 8;
@@ -214,7 +184,7 @@ namespace pryErpChalimond
             this.lblSubtitulo.Name = "lblSubtitulo";
             this.lblSubtitulo.Size = new System.Drawing.Size(334, 45);
             this.lblSubtitulo.TabIndex = 1;
-            this.lblSubtitulo.Text = "Bienvenido a Chalimond ERP\nIngrese sus credenciales de acceso";
+            this.lblSubtitulo.Text = "Bienvenido al sistema\nIngrese sus credenciales de acceso";
             this.lblSubtitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblTitulo
@@ -225,7 +195,7 @@ namespace pryErpChalimond
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(334, 48);
             this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Chalimond ERP";
+            this.lblTitulo.Text = "Sistema de gestion";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmLogin
@@ -262,7 +232,5 @@ namespace pryErpChalimond
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Label lblError;
-        private System.Windows.Forms.Label lblRegistrarse;
-        private System.Windows.Forms.Label lblNoCuenta;
     }
 }
