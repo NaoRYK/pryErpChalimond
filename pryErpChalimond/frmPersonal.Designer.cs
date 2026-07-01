@@ -237,7 +237,7 @@ namespace pryErpChalimond
             this.chkActivo.Size = new System.Drawing.Size(66, 21);
             this.chkActivo.TabIndex = 9;
             this.chkActivo.Text = "Activo";
-            this.chkActivo.BackColor = System.Drawing.Color.FromArgb(15, 23, 42);
+            this.chkActivo.BackColor = System.Drawing.Color.Transparent;
             this.chkActivo.UseVisualStyleBackColor = false;
             this.chkActivo.CheckedChanged += new System.EventHandler(this.chkActivo_CheckedChanged);
 

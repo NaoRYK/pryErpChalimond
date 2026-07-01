@@ -1123,7 +1123,7 @@ namespace pryErpChalimond
             EstilizarBoton(btnEditar, System.Drawing.Color.FromArgb(79, 70, 229));
             EstilizarBoton(btnNuevo, System.Drawing.Color.FromArgb(16, 185, 129));
 
-            chkActivo.BackColor = System.Drawing.Color.FromArgb(15, 23, 42);
+            chkActivo.BackColor = System.Drawing.Color.Transparent;
             chkActivo.ForeColor = System.Drawing.Color.White;
             chkActivo.UseVisualStyleBackColor = false;
 
