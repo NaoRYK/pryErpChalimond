@@ -11,6 +11,7 @@ namespace pryErpChalimond
         private int selectedIdPersonal = -1;
         private bool isUpdatingUI = false;
         private Label lblContactosAviso;
+        private bool isEditMode = false;
 
         public frmPersonal()
         {
@@ -25,12 +26,12 @@ namespace pryErpChalimond
 
             // Configurar aviso dinámico para contactos
             lblContactosAviso = new Label();
-            lblContactosAviso.Text = "⚠️ Seleccione un empleado en la lista inferior para poder gestionar sus contactos y redes sociales.";
+            lblContactosAviso.Text = "⚠️ Seleccione un empleado en la lista izquierda para poder gestionar sus contactos y redes sociales.";
             lblContactosAviso.ForeColor = System.Drawing.Color.FromArgb(248, 113, 113); // Light Red / Salmon
             lblContactosAviso.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             lblContactosAviso.AutoSize = false;
-            lblContactosAviso.Size = new System.Drawing.Size(720, 50);
-            lblContactosAviso.Location = new System.Drawing.Point(20, 30);
+            lblContactosAviso.Size = new System.Drawing.Size(502, 100);
+            lblContactosAviso.Location = new System.Drawing.Point(20, 100);
             lblContactosAviso.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             lblContactosAviso.Visible = false;
             pnlContactoContainer.Controls.Add(lblContactosAviso);
@@ -38,6 +39,19 @@ namespace pryErpChalimond
             EstilizarControles();
             LimpiarFormulario();
             SetTab(true);
+
+            // Interceptar eventos de ComboBoxes para simular ReadOnly
+            cmbProvincia.KeyDown += PreventComboBoxUsage;
+            cmbProvincia.KeyPress += PreventComboBoxUsageKey;
+            cmbProvincia.DropDown += PreventComboBoxUsageClick;
+
+            cmbLocalidad.KeyDown += PreventComboBoxUsage;
+            cmbLocalidad.KeyPress += PreventComboBoxUsageKey;
+            cmbLocalidad.DropDown += PreventComboBoxUsageClick;
+
+            cmbTipo.KeyDown += PreventComboBoxUsage;
+            cmbTipo.KeyPress += PreventComboBoxUsageKey;
+            cmbTipo.DropDown += PreventComboBoxUsageClick;
 
             // Ocultar gestión de usuario para roles no administradores
             if (!clsSesion.Rol.Equals("Admin", StringComparison.OrdinalIgnoreCase))
@@ -138,15 +152,17 @@ namespace pryErpChalimond
                 if (dgvPersonal.Columns.Contains("Latitud")) dgvPersonal.Columns["Latitud"].Visible = false;
                 if (dgvPersonal.Columns.Contains("Longitud")) dgvPersonal.Columns["Longitud"].Visible = false;
 
+                // Ocultar columnas detalladas para vista limpia en modo Master-Detail
+                if (dgvPersonal.Columns.Contains("DNI")) dgvPersonal.Columns["DNI"].Visible = false;
+                if (dgvPersonal.Columns.Contains("Direccion")) dgvPersonal.Columns["Direccion"].Visible = false;
+                if (dgvPersonal.Columns.Contains("UbicacionGeografica")) dgvPersonal.Columns["UbicacionGeografica"].Visible = false;
+                if (dgvPersonal.Columns.Contains("NombreProvincia")) dgvPersonal.Columns["NombreProvincia"].Visible = false;
+                if (dgvPersonal.Columns.Contains("NombreLocalidad")) dgvPersonal.Columns["NombreLocalidad"].Visible = false;
+                if (dgvPersonal.Columns.Contains("Activo")) dgvPersonal.Columns["Activo"].Visible = false;
+
                 // Renombrar cabeceras
-                if (dgvPersonal.Columns.Contains("DNI")) dgvPersonal.Columns["DNI"].HeaderText = "DNI";
                 if (dgvPersonal.Columns.Contains("Apellido")) dgvPersonal.Columns["Apellido"].HeaderText = "Apellido";
                 if (dgvPersonal.Columns.Contains("Nombre")) dgvPersonal.Columns["Nombre"].HeaderText = "Nombre";
-                if (dgvPersonal.Columns.Contains("Direccion")) dgvPersonal.Columns["Direccion"].HeaderText = "Dirección";
-                if (dgvPersonal.Columns.Contains("UbicacionGeografica")) dgvPersonal.Columns["UbicacionGeografica"].HeaderText = "Ubicación Geográfica";
-                if (dgvPersonal.Columns.Contains("NombreProvincia")) dgvPersonal.Columns["NombreProvincia"].HeaderText = "Provincia";
-                if (dgvPersonal.Columns.Contains("NombreLocalidad")) dgvPersonal.Columns["NombreLocalidad"].HeaderText = "Localidad";
-                if (dgvPersonal.Columns.Contains("Activo")) dgvPersonal.Columns["Activo"].HeaderText = "Activo";
 
                 // Restaurar la selección si corresponde
                 if (currentId != -1)
@@ -156,7 +172,7 @@ namespace pryErpChalimond
                         if (Convert.ToInt32(row.Cells["IdPersonal"].Value) == currentId)
                         {
                             row.Selected = true;
-                            dgvPersonal.CurrentCell = row.Cells["DNI"];
+                            dgvPersonal.CurrentCell = row.Cells["Apellido"];
                             break;
                         }
                     }
@@ -386,6 +402,8 @@ namespace pryErpChalimond
 
                 CargarGrillaPersonal();
                 LimpiarFormulario();
+                isEditMode = false;
+                ActualizarModoEdicion();
             }
             catch (Exception ex)
             {
@@ -443,7 +461,20 @@ namespace pryErpChalimond
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            LimpiarFormulario();
+            isEditMode = false;
+            if (selectedIdPersonal != -1)
+            {
+                CargarGrillaPersonal();
+                if (dgvPersonal.CurrentRow != null)
+                {
+                    dgvPersonal_CellClick(dgvPersonal, new DataGridViewCellEventArgs(0, dgvPersonal.CurrentRow.Index));
+                }
+            }
+            else
+            {
+                LimpiarFormulario();
+            }
+            ActualizarModoEdicion();
         }
 
         private void LimpiarFormulario()
@@ -550,6 +581,7 @@ namespace pryErpChalimond
 
                 CargarDireccionesAdicionales();
                 ActualizarBotonUsuario(-1);
+                ActualizarModoEdicion();
                 return;
             }
 
@@ -615,6 +647,7 @@ namespace pryErpChalimond
                 isUpdatingUI = false;
                 MessageBox.Show("Error al cargar datos del personal: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            ActualizarModoEdicion();
         }
 
         private void CargarGrillaContactos(int idPersonal)
@@ -1087,6 +1120,12 @@ namespace pryErpChalimond
             EstilizarBoton(btnAgregarContacto, System.Drawing.Color.FromArgb(16, 185, 129));
             EstilizarBoton(btnEliminarContacto, System.Drawing.Color.FromArgb(220, 38, 38));
             EstilizarBoton(btnGestionarUsuario, System.Drawing.Color.FromArgb(79, 70, 229));
+            EstilizarBoton(btnEditar, System.Drawing.Color.FromArgb(79, 70, 229));
+            EstilizarBoton(btnNuevo, System.Drawing.Color.FromArgb(16, 185, 129));
+
+            chkActivo.BackColor = System.Drawing.Color.FromArgb(15, 23, 42);
+            chkActivo.ForeColor = System.Drawing.Color.White;
+            chkActivo.UseVisualStyleBackColor = false;
 
             EstilizarBotonTab(btnTabDatos);
             EstilizarBotonTab(btnTabContactos);
@@ -1167,6 +1206,114 @@ namespace pryErpChalimond
             int g = Math.Min(color.G + val, 255);
             int b = Math.Min(color.B + val, 255);
             return System.Drawing.Color.FromArgb(r, g, b);
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (selectedIdPersonal == -1) return;
+            isEditMode = true;
+            ActualizarModoEdicion();
+        }
+
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
+            isEditMode = true;
+            ActualizarModoEdicion();
+            txtDni.Focus();
+        }
+
+        private void ActualizarModoEdicion()
+        {
+            txtDni.ReadOnly = !isEditMode;
+            txtApellido.ReadOnly = !isEditMode;
+            txtNombre.ReadOnly = !isEditMode;
+            txtDireccion.ReadOnly = !isEditMode;
+            txtUbicacionGeografica.ReadOnly = !isEditMode;
+            
+            // Mantener Enabled=true para preservar el diseño oscuro, bloqueamos interacción en los eventos
+            cmbProvincia.Enabled = true;
+            cmbLocalidad.Enabled = true;
+            chkActivo.Enabled = isEditMode && (selectedIdPersonal != -1);
+
+            cmbTipo.Enabled = true;
+            txtValor.ReadOnly = !isEditMode;
+            btnAgregarContacto.Enabled = isEditMode && (selectedIdPersonal != -1);
+            btnEliminarContacto.Enabled = isEditMode && (selectedIdPersonal != -1);
+
+            txtDireccionAdicional.ReadOnly = !isEditMode;
+            btnAgregarDireccionAdicional.Enabled = isEditMode && (selectedIdPersonal != -1);
+            btnEliminarDireccionAdicional.Enabled = isEditMode && (selectedIdPersonal != -1);
+
+            btnGuardar.Visible = isEditMode;
+            btnLimpiar.Visible = isEditMode;
+            btnEditar.Visible = !isEditMode && (selectedIdPersonal != -1);
+            btnNuevo.Visible = !isEditMode;
+
+            btnEliminar.Enabled = !isEditMode && (selectedIdPersonal != -1);
+            btnGestionarUsuario.Enabled = !isEditMode && (selectedIdPersonal != -1);
+
+            // Fijar color Slate-800 de fondo y borde FixedSingle para legibilidad total
+            System.Drawing.Color bg = System.Drawing.Color.FromArgb(30, 41, 59);
+            txtDni.BackColor = bg;
+            txtApellido.BackColor = bg;
+            txtNombre.BackColor = bg;
+            txtDireccion.BackColor = bg;
+            txtUbicacionGeografica.BackColor = bg;
+            cmbProvincia.BackColor = bg;
+            cmbLocalidad.BackColor = bg;
+            txtDireccionAdicional.BackColor = bg;
+            txtValor.BackColor = bg;
+
+            txtDni.BorderStyle = BorderStyle.FixedSingle;
+            txtApellido.BorderStyle = BorderStyle.FixedSingle;
+            txtNombre.BorderStyle = BorderStyle.FixedSingle;
+            txtDireccion.BorderStyle = BorderStyle.FixedSingle;
+            txtUbicacionGeografica.BorderStyle = BorderStyle.FixedSingle;
+            txtDireccionAdicional.BorderStyle = BorderStyle.FixedSingle;
+            txtValor.BorderStyle = BorderStyle.FixedSingle;
+
+            // Letra gris en modo lectura, letra blanca en modo edición
+            System.Drawing.Color fg = isEditMode ? System.Drawing.Color.White : System.Drawing.Color.FromArgb(148, 163, 184);
+            txtDni.ForeColor = fg;
+            txtApellido.ForeColor = fg;
+            txtNombre.ForeColor = fg;
+            txtDireccion.ForeColor = fg;
+            txtUbicacionGeografica.ForeColor = fg;
+            cmbProvincia.ForeColor = fg;
+            cmbLocalidad.ForeColor = fg;
+            txtDireccionAdicional.ForeColor = fg;
+            txtValor.ForeColor = fg;
+
+            btnLimpiar.Text = "Cancelar";
+        }
+
+        private void PreventComboBoxUsage(object sender, KeyEventArgs e)
+        {
+            if (!isEditMode)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void PreventComboBoxUsageKey(object sender, KeyPressEventArgs e)
+        {
+            if (!isEditMode)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void PreventComboBoxUsageClick(object sender, EventArgs e)
+        {
+            if (!isEditMode)
+            {
+                ComboBox cmb = sender as ComboBox;
+                if (cmb != null)
+                {
+                    cmb.DroppedDown = false;
+                }
+            }
         }
     }
 }

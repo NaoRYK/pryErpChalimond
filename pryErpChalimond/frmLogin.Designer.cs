@@ -31,6 +31,7 @@ namespace pryErpChalimond
             this.lblUser = new System.Windows.Forms.Label();
             this.lblSubtitulo = new System.Windows.Forms.Label();
             this.lblTitulo = new System.Windows.Forms.Label();
+            this.btnMostrarContrasena = new System.Windows.Forms.Button();
             this.pnlBackground.SuspendLayout();
             this.pnlCard.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +53,7 @@ namespace pryErpChalimond
             this.pnlCard.Controls.Add(this.lblError);
             this.pnlCard.Controls.Add(this.btnSalir);
             this.pnlCard.Controls.Add(this.btnLogin);
+            this.pnlCard.Controls.Add(this.btnMostrarContrasena);
             this.pnlCard.Controls.Add(this.pnlPasswordUnderline);
             this.pnlCard.Controls.Add(this.txtContrasena);
             this.pnlCard.Controls.Add(this.lblPassword);
@@ -127,11 +129,29 @@ namespace pryErpChalimond
             this.txtContrasena.ForeColor = System.Drawing.Color.White;
             this.txtContrasena.Location = new System.Drawing.Point(25, 235);
             this.txtContrasena.Name = "txtContrasena";
-            this.txtContrasena.Size = new System.Drawing.Size(334, 21);
+            this.txtContrasena.Size = new System.Drawing.Size(280, 21);
             this.txtContrasena.TabIndex = 6;
             this.txtContrasena.UseSystemPasswordChar = true;
             this.txtContrasena.Enter += new System.EventHandler(this.txtContrasena_Enter);
             this.txtContrasena.Leave += new System.EventHandler(this.txtContrasena_Leave);
+            // 
+            // btnMostrarContrasena
+            // 
+            this.btnMostrarContrasena.BackColor = System.Drawing.Color.Transparent;
+            this.btnMostrarContrasena.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMostrarContrasena.FlatAppearance.BorderSize = 0;
+            this.btnMostrarContrasena.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.btnMostrarContrasena.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.btnMostrarContrasena.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMostrarContrasena.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.btnMostrarContrasena.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.btnMostrarContrasena.Location = new System.Drawing.Point(310, 230);
+            this.btnMostrarContrasena.Name = "btnMostrarContrasena";
+            this.btnMostrarContrasena.Size = new System.Drawing.Size(50, 25);
+            this.btnMostrarContrasena.TabIndex = 11;
+            this.btnMostrarContrasena.Text = "Ver";
+            this.btnMostrarContrasena.UseVisualStyleBackColor = false;
+            this.btnMostrarContrasena.Click += new System.EventHandler(this.btnMostrarContrasena_Click);
             // 
             // lblPassword
             // 
@@ -228,6 +248,7 @@ namespace pryErpChalimond
         private System.Windows.Forms.Panel pnlUserUnderline;
         private System.Windows.Forms.Panel pnlPasswordUnderline;
         private System.Windows.Forms.TextBox txtContrasena;
+        private System.Windows.Forms.Button btnMostrarContrasena;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnSalir;

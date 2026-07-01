@@ -188,6 +188,12 @@ namespace pryErpChalimond
             pnlPasswordUnderline.BackColor = Color.FromArgb(71, 85, 105);
         }
 
+        private void btnMostrarContrasena_Click(object sender, EventArgs e)
+        {
+            txtContrasena.UseSystemPasswordChar = !txtContrasena.UseSystemPasswordChar;
+            btnMostrarContrasena.Text = txtContrasena.UseSystemPasswordChar ? "Ver" : "Ocultar";
+        }
+
         private void pnlBackground_Paint(object sender, PaintEventArgs e)
         {
 
