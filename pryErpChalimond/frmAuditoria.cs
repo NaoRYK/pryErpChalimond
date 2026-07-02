@@ -8,6 +8,8 @@ namespace pryErpChalimond
 {
     public partial class frmAuditoria : Form
     {
+        private bool isUpdatingFilters = false;
+
         public frmAuditoria()
         {
             InitializeComponent();
@@ -28,10 +30,18 @@ namespace pryErpChalimond
 
             // Cargar datos
             CargarAuditorias();
+
+            // Suscribir eventos para filtrado automático
+            txtUserFiltro.TextChanged += (s, ev) => CargarAuditorias();
+            cmbExitosoFiltro.SelectedIndexChanged += (s, ev) => CargarAuditorias();
+            dtpDesde.ValueChanged += (s, ev) => CargarAuditorias();
+            dtpHasta.ValueChanged += (s, ev) => CargarAuditorias();
         }
 
         private void CargarAuditorias()
         {
+            if (isUpdatingFilters) return;
+
             try
             {
                 string sql = "SELECT NombreUsuario, FechaHora, Modulo, Accion, Exitoso, Detalle FROM AuditoriaSesion WHERE 1=1";
@@ -74,18 +84,7 @@ namespace pryErpChalimond
                 DataTable dt = clsConexion.ObtenerTabla(sql, parameters.Count > 0 ? parameters.ToArray() : null);
                 dgvAuditoria.DataSource = dt;
 
-                // Notificar cuando la búsqueda no devuelve registros
-                if (dt.Rows.Count == 0)
-                {
-                    string filtroActivo = chkFechaFiltro.Checked
-                        ? $" entre {dtpDesde.Value:dd/MM/yyyy} y {dtpHasta.Value:dd/MM/yyyy}"
-                        : "";
-                    MessageBox.Show(
-                        $"No se encontraron registros de auditoría con los filtros aplicados{filtroActivo}.\n\nProbá ampliando el rango de fechas o eliminando algún filtro.",
-                        "Sin resultados",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
+                // Notificar cuando la búsqueda no devuelve registros (omitido para filtrado automático fluido)
 
                 // Cambiar cabeceras para mostrar nombres legibles
                 if (dgvAuditoria.Columns.Count > 0)
@@ -109,18 +108,23 @@ namespace pryErpChalimond
             CargarAuditorias();
         }
 
-        private void btnFiltrar_Click(object sender, EventArgs e)
-        {
-            CargarAuditorias();
-        }
+
 
         private void btnLimpiarFiltro_Click(object sender, EventArgs e)
         {
-            txtUserFiltro.Clear();
-            cmbExitosoFiltro.SelectedIndex = 0;
-            chkFechaFiltro.Checked = false;
-            dtpDesde.Value = DateTime.Today;
-            dtpHasta.Value = DateTime.Today;
+            isUpdatingFilters = true;
+            try
+            {
+                txtUserFiltro.Clear();
+                cmbExitosoFiltro.SelectedIndex = 0;
+                chkFechaFiltro.Checked = false;
+                dtpDesde.Value = DateTime.Today;
+                dtpHasta.Value = DateTime.Today;
+            }
+            finally
+            {
+                isUpdatingFilters = false;
+            }
             CargarAuditorias();
         }
 
@@ -128,6 +132,7 @@ namespace pryErpChalimond
         {
             dtpDesde.Enabled = chkFechaFiltro.Checked;
             dtpHasta.Enabled = chkFechaFiltro.Checked;
+            CargarAuditorias();
         }
     }
 }

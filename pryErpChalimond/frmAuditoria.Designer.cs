@@ -26,7 +26,6 @@ namespace pryErpChalimond
             this.btnRefrescar = new System.Windows.Forms.Button();
             this.pnlFiltros = new System.Windows.Forms.Panel();
             this.btnLimpiarFiltro = new System.Windows.Forms.Button();
-            this.btnFiltrar = new System.Windows.Forms.Button();
             this.dtpHasta = new System.Windows.Forms.DateTimePicker();
             this.lblHasta = new System.Windows.Forms.Label();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
@@ -127,7 +126,6 @@ namespace pryErpChalimond
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFiltros.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.pnlFiltros.Controls.Add(this.btnLimpiarFiltro);
-            this.pnlFiltros.Controls.Add(this.btnFiltrar);
             this.pnlFiltros.Controls.Add(this.dtpHasta);
             this.pnlFiltros.Controls.Add(this.lblHasta);
             this.pnlFiltros.Controls.Add(this.dtpDesde);
@@ -142,6 +140,7 @@ namespace pryErpChalimond
             this.pnlFiltros.Size = new System.Drawing.Size(760, 100);
             this.pnlFiltros.TabIndex = 3;
             // 
+            // 
             // btnLimpiarFiltro
             // 
             this.btnLimpiarFiltro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
@@ -150,29 +149,13 @@ namespace pryErpChalimond
             this.btnLimpiarFiltro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiarFiltro.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLimpiarFiltro.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiarFiltro.Location = new System.Drawing.Point(645, 52);
+            this.btnLimpiarFiltro.Location = new System.Drawing.Point(645, 35);
             this.btnLimpiarFiltro.Name = "btnLimpiarFiltro";
             this.btnLimpiarFiltro.Size = new System.Drawing.Size(100, 30);
             this.btnLimpiarFiltro.TabIndex = 10;
             this.btnLimpiarFiltro.Text = "Limpiar";
             this.btnLimpiarFiltro.UseVisualStyleBackColor = false;
             this.btnLimpiarFiltro.Click += new System.EventHandler(this.btnLimpiarFiltro_Click);
-            // 
-            // btnFiltrar
-            // 
-            this.btnFiltrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.btnFiltrar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFiltrar.FlatAppearance.BorderSize = 0;
-            this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFiltrar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnFiltrar.ForeColor = System.Drawing.Color.White;
-            this.btnFiltrar.Location = new System.Drawing.Point(645, 15);
-            this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(100, 30);
-            this.btnFiltrar.TabIndex = 9;
-            this.btnFiltrar.Text = "Filtrar";
-            this.btnFiltrar.UseVisualStyleBackColor = false;
-            this.btnFiltrar.Click += new System.EventHandler(this.btnFiltrar_Click);
             // 
             // dtpHasta
             // 
@@ -277,7 +260,6 @@ namespace pryErpChalimond
             // 
             // frmAuditoria
             // 
-            this.AcceptButton = this.btnFiltrar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
@@ -314,7 +296,6 @@ namespace pryErpChalimond
         private System.Windows.Forms.DateTimePicker dtpDesde;
         private System.Windows.Forms.Label lblHasta;
         private System.Windows.Forms.DateTimePicker dtpHasta;
-        private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Button btnLimpiarFiltro;
     }
 }
