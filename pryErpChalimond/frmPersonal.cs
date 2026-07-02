@@ -20,6 +20,11 @@ namespace pryErpChalimond
 
         private void frmPersonal_Load(object sender, EventArgs e)
         {
+            // Maximizar la ventana principal automáticamente al abrir este módulo
+            frmMain mainForm = Application.OpenForms["frmMain"] as frmMain;
+            if (mainForm != null)
+                mainForm.WindowState = FormWindowState.Maximized;
+
             CargarProvincias();
             CargarGrillaPersonal();
             CargarTiposContacto();
@@ -262,6 +267,13 @@ namespace pryErpChalimond
                 txtApellido.Focus();
                 return;
             }
+            // Validación: Apellido solo puede contener letras (incluye acentos y ñ)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(apellido, @"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s\-']+$"))
+            {
+                MessageBox.Show("El Apellido solo puede contener letras, espacios, guiones o apóstrofes.", "Formato Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtApellido.Focus();
+                return;
+            }
 
             if (string.IsNullOrEmpty(nombre))
             {
@@ -272,6 +284,13 @@ namespace pryErpChalimond
             if (nombre.Length < 2)
             {
                 MessageBox.Show("El Nombre debe tener al menos 2 caracteres.", "Formato Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNombre.Focus();
+                return;
+            }
+            // Validación: Nombre solo puede contener letras (incluye acentos y ñ)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(nombre, @"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s\-']+$"))
+            {
+                MessageBox.Show("El Nombre solo puede contener letras, espacios, guiones o apóstrofes.", "Formato Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNombre.Focus();
                 return;
             }
@@ -892,29 +911,58 @@ namespace pryErpChalimond
             if (selectedIdPersonal == -1)
             {
                 txtDireccionAdicional.Clear();
-                txtDireccionAdicional.Enabled = false;
-                btnAgregarDireccionAdicional.Enabled = false;
-                btnEliminarDireccionAdicional.Enabled = false;
+                txtDireccionAdicional.Enabled            = false;
+                btnAgregarDireccionAdicional.Enabled     = false;
+                btnEliminarDireccionAdicional.Enabled    = false;
                 return;
             }
 
-            txtDireccionAdicional.Enabled = true;
-            btnAgregarDireccionAdicional.Enabled = true;
-            btnEliminarDireccionAdicional.Enabled = true;
+            txtDireccionAdicional.Enabled            = true;
+            btnAgregarDireccionAdicional.Enabled     = true;
+            btnEliminarDireccionAdicional.Enabled    = true;
 
             try
             {
-                DataTable dt = clsConexion.ObtenerTabla("SELECT IdContacto, Valor FROM PersonalContactos WHERE IdPersonal = ? AND Tipo = 'Dirección Adicional' ORDER BY Valor", new OleDbParameter[] {
-                    new OleDbParameter("?", selectedIdPersonal)
-                });
+                // Tabla unificada: Dirección principal + Ubicación + Adicionales
+                // IdContacto negativo = solo lectura (no se puede borrar desde esta lista)
+                System.Data.DataTable dt = new System.Data.DataTable();
+                dt.Columns.Add("IdContacto", typeof(int));
+                dt.Columns.Add("Valor",      typeof(string));
 
-                lstDireccionesAdicionales.DataSource = dt;
+                // Agregar dirección principal y ubicación geográfica desde Personal
+                System.Data.DataTable dtPersonal = clsConexion.ObtenerTabla(
+                    "SELECT Direccion, UbicacionGeografica FROM Personal WHERE IdPersonal = ?",
+                    new OleDbParameter[] { new OleDbParameter("?", selectedIdPersonal) });
+
+                if (dtPersonal.Rows.Count > 0)
+                {
+                    string dirPrincipal = dtPersonal.Rows[0]["Direccion"].ToString().Trim();
+                    string ubicacion    = dtPersonal.Rows[0]["UbicacionGeografica"].ToString().Trim();
+
+                    // IdContacto = -1 reservado para la dirección principal
+                    if (!string.IsNullOrEmpty(dirPrincipal))
+                        dt.Rows.Add(-1, "[Principal] " + dirPrincipal);
+
+                    // IdContacto = -2 reservado para la ubicación geográfica
+                    if (!string.IsNullOrEmpty(ubicacion))
+                        dt.Rows.Add(-2, "[Ubicación] " + ubicacion);
+                }
+
+                // Agregar las direcciones adicionales almacenadas en PersonalContactos
+                System.Data.DataTable dtAdicionales = clsConexion.ObtenerTabla(
+                    "SELECT IdContacto, Valor FROM PersonalContactos WHERE IdPersonal = ? AND Tipo = 'Dirección Adicional' ORDER BY Valor",
+                    new OleDbParameter[] { new OleDbParameter("?", selectedIdPersonal) });
+
+                foreach (System.Data.DataRow row in dtAdicionales.Rows)
+                    dt.Rows.Add(Convert.ToInt32(row["IdContacto"]), row["Valor"].ToString());
+
+                lstDireccionesAdicionales.DataSource    = dt;
                 lstDireccionesAdicionales.DisplayMember = "Valor";
-                lstDireccionesAdicionales.ValueMember = "IdContacto";
+                lstDireccionesAdicionales.ValueMember   = "IdContacto";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar direcciones adicionales: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar direcciones: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -963,6 +1011,13 @@ namespace pryErpChalimond
             }
 
             int idContacto = Convert.ToInt32(lstDireccionesAdicionales.SelectedValue);
+
+            // IdContacto negativo = dirección principal o ubicación (no eliminables desde aquí)
+            if (idContacto < 0)
+            {
+                MessageBox.Show("La dirección principal y la ubicación no pueden eliminarse desde aquí.\nEdite directamente los campos 'Dirección' o 'Ubicación' del formulario.", "No disponible", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             string valor = lstDireccionesAdicionales.Text;
 
             DialogResult result = MessageBox.Show($"¿Está seguro de que desea eliminar la dirección adicional '{valor}'?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1237,7 +1292,9 @@ namespace pryErpChalimond
             chkActivo.Enabled = isEditMode && (selectedIdPersonal != -1);
 
             cmbTipo.Enabled = true;
-            txtValor.ReadOnly = !isEditMode;
+            // txtValor siempre permite escritura cuando hay un empleado seleccionado;
+            // los contactos se gestionan independientemente del modo de edición del formulario
+            txtValor.ReadOnly = false;
             btnAgregarContacto.Enabled = isEditMode && (selectedIdPersonal != -1);
             btnEliminarContacto.Enabled = isEditMode && (selectedIdPersonal != -1);
 

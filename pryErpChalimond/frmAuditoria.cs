@@ -74,6 +74,19 @@ namespace pryErpChalimond
                 DataTable dt = clsConexion.ObtenerTabla(sql, parameters.Count > 0 ? parameters.ToArray() : null);
                 dgvAuditoria.DataSource = dt;
 
+                // Notificar cuando la búsqueda no devuelve registros
+                if (dt.Rows.Count == 0)
+                {
+                    string filtroActivo = chkFechaFiltro.Checked
+                        ? $" entre {dtpDesde.Value:dd/MM/yyyy} y {dtpHasta.Value:dd/MM/yyyy}"
+                        : "";
+                    MessageBox.Show(
+                        $"No se encontraron registros de auditoría con los filtros aplicados{filtroActivo}.\n\nProbá ampliando el rango de fechas o eliminando algún filtro.",
+                        "Sin resultados",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+
                 // Cambiar cabeceras para mostrar nombres legibles
                 if (dgvAuditoria.Columns.Count > 0)
                 {

@@ -33,9 +33,11 @@ namespace pryErpChalimond
             this.txtUsuarioSel = new System.Windows.Forms.TextBox();
             this.lblUsuarioSel = new System.Windows.Forms.Label();
             this.lblTituloEditar = new System.Windows.Forms.Label();
-            this.lblContrasena = new System.Windows.Forms.Label();
-            this.txtContrasena = new System.Windows.Forms.TextBox();
-            this.btnNuevo = new System.Windows.Forms.Button();
+            this.lblContrasena        = new System.Windows.Forms.Label();
+            this.txtContrasena        = new System.Windows.Forms.TextBox();
+            // Botón para mostrar/ocultar la contraseña
+            this.btnToggleContrasena  = new System.Windows.Forms.Button();
+            this.btnNuevo             = new System.Windows.Forms.Button();
             this.chkActivo = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.pnlEditar.SuspendLayout();
@@ -115,6 +117,8 @@ namespace pryErpChalimond
             this.pnlEditar.Controls.Add(this.chkActivo);
             this.pnlEditar.Controls.Add(this.lblContrasena);
             this.pnlEditar.Controls.Add(this.txtContrasena);
+            // Botón ojo (ver/ocultar contraseña) también dentro del panel
+            this.pnlEditar.Controls.Add(this.btnToggleContrasena);
             this.pnlEditar.Controls.Add(this.btnLimpiar);
             this.pnlEditar.Controls.Add(this.btnGuardar);
             this.pnlEditar.Controls.Add(this.cmbPersonalAsociar);
@@ -257,17 +261,32 @@ namespace pryErpChalimond
             this.lblContrasena.TabIndex = 8;
             this.lblContrasena.Text = "Contraseña (Nueva/DNI):";
             // 
-            // txtContrasena
-            // 
+            // txtContrasena — ancho reducido para dar lugar al botón ojo
             this.txtContrasena.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             this.txtContrasena.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtContrasena.Font = new System.Drawing.Font("Segoe UI", 10.5F);
             this.txtContrasena.ForeColor = System.Drawing.Color.White;
             this.txtContrasena.Location = new System.Drawing.Point(25, 245);
             this.txtContrasena.Name = "txtContrasena";
-            this.txtContrasena.Size = new System.Drawing.Size(238, 26);
+            this.txtContrasena.Size = new System.Drawing.Size(204, 26);
             this.txtContrasena.TabIndex = 9;
             this.txtContrasena.UseSystemPasswordChar = true;
+            //
+            // btnToggleContrasena — muestra u oculta la contraseña
+            //
+            this.btnToggleContrasena.BackColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            this.btnToggleContrasena.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnToggleContrasena.FlatAppearance.BorderSize = 0;
+            this.btnToggleContrasena.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnToggleContrasena.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnToggleContrasena.ForeColor = System.Drawing.Color.White;
+            this.btnToggleContrasena.Location = new System.Drawing.Point(233, 244);
+            this.btnToggleContrasena.Name = "btnToggleContrasena";
+            this.btnToggleContrasena.Size = new System.Drawing.Size(30, 27);
+            this.btnToggleContrasena.TabIndex = 13;
+            this.btnToggleContrasena.Text = "👁";
+            this.btnToggleContrasena.UseVisualStyleBackColor = false;
+            this.btnToggleContrasena.Click += new System.EventHandler(this.btnToggleContrasena_Click);
             // 
             // btnNuevo
             // 
@@ -333,9 +352,10 @@ namespace pryErpChalimond
         private System.Windows.Forms.ComboBox cmbPersonalAsociar;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.Label lblContrasena;
+        private System.Windows.Forms.Label   lblContrasena;
         private System.Windows.Forms.TextBox txtContrasena;
-        private System.Windows.Forms.Button btnNuevo;
+        private System.Windows.Forms.Button  btnToggleContrasena;
+        private System.Windows.Forms.Button  btnNuevo;
         private System.Windows.Forms.CheckBox chkActivo;
     }
 }

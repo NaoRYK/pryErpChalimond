@@ -421,6 +421,15 @@ namespace pryErpChalimond
             txtUsuarioSel.Focus();
         }
 
+        // Alterna entre mostrar y ocultar el texto de la contraseña
+        private void btnToggleContrasena_Click(object sender, EventArgs e)
+        {
+            // Invertir el modo de asteriscos
+            txtContrasena.UseSystemPasswordChar = !txtContrasena.UseSystemPasswordChar;
+            // Cambiar el ícono del botón según el estado actual
+            btnToggleContrasena.Text = txtContrasena.UseSystemPasswordChar ? "👁" : "🙈";
+        }
+
         private void cmbPersonalAsociar_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!isNewMode) return;
