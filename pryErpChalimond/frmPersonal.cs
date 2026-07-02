@@ -1292,11 +1292,10 @@ namespace pryErpChalimond
             chkActivo.Enabled = isEditMode && (selectedIdPersonal != -1);
 
             cmbTipo.Enabled = true;
-            // txtValor siempre permite escritura cuando hay un empleado seleccionado;
-            // los contactos se gestionan independientemente del modo de edición del formulario
+            // Contactos son independientes del modo de edición — solo requieren un empleado seleccionado
             txtValor.ReadOnly = false;
-            btnAgregarContacto.Enabled = isEditMode && (selectedIdPersonal != -1);
-            btnEliminarContacto.Enabled = isEditMode && (selectedIdPersonal != -1);
+            btnAgregarContacto.Enabled  = selectedIdPersonal != -1;
+            btnEliminarContacto.Enabled = selectedIdPersonal != -1;
 
             txtDireccionAdicional.ReadOnly = !isEditMode;
             btnAgregarDireccionAdicional.Enabled = isEditMode && (selectedIdPersonal != -1);
